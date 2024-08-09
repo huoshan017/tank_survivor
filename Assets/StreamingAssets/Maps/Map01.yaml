@@ -1,0 +1,69 @@
+id: 1
+name: "map01"
+bounds: { x: -80000, y: -64000, w: 160000, h: 128000 }
+grid: { width: 16000, height: 16000 }
+entities:
+  - id: 13
+    camp_data: { type: 1 }
+    transform_data: { pos: { x: 2000, y: -4000} }
+  - id: 100101
+    camp_data: { type: 1 }
+    transform_data: { pos: { x: -3000, y: 9000}, rotation: 100 }
+  - id: 100103
+    camp_data: { type: 1 }
+    transform_data:
+      pos: { x: 2000, y: 100 }
+      rotation: 220
+  - id: 100111
+    camp_data: { type: 1 }
+    transform_data: { pos: { x: 5000, y: -7000} }
+  - id: 100112
+    camp_data: { type: 1 }
+    transform_data: { pos: { x: 8000, y: -1000 } }
+  - id: 100113
+    camp_data: { type: 1 }
+    transform_data: { pos: { x: 6000, y: 2000 } }
+  - id: 100121
+    camp_data: { type: 1 }
+    transform_data: { pos: { x: 2500, y: 6000} }
+  - id: 100123
+    camp_data: { type: 1 }
+    transform_data: { pos: { x: -5000, y: -4000} }
+  - id: 100130
+    camp_data: { type: 1 }
+    transform_data: { pos: { x: -8000, y: 6000} }
+fences:
+  - id: 5
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: -81000, y: 0 } }
+    collider_data: { shape: "rect", width: 2000, height: 128000, is_rigidbody: true }
+  - id: 5
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 0, y: -65000 } }
+    collider_data: { shape: "rect", width: 160000, height: 2000, is_rigidbody: true }
+  - id: 5
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 81000, y: 0} }
+    collider_data: { shape: "rect", width: 2000, height: 128000, is_rigidbody: true }
+  - id: 5
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 0, y: 65000 } }
+    collider_data: { shape: "rect", width: 160000, height: 2000, is_rigidbody: true }
+
+players_info:
+  - no: 0
+    transform_data:
+      pos: { x: -24700, y: -800 }
+      rotation: 120
+  - no: 1
+    transform_data:
+      pos: { x: -700, y: -900 }
+      rotation: 0
+  - no: 2
+    transform_data:
+      pos: { x: -600, y: -600 }
+      rotation: 10
+  - no: 3
+    transform_data:
+      pos: { x: -600, y: -700 }
+      rotation: 20

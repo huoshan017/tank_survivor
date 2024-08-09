@@ -1,0 +1,284 @@
+entities_def:
+
+  - id: 12
+    name: "e2"
+    components:
+      transform_comp: {}
+      movement_comp: { speed: 300 }
+
+  - id: 13
+    name: "e3"
+    components:
+      transform_comp: {}
+      movement_comp:
+        move_type: 2  # 圆周运动
+        move_on_awake: true # 一出世就移动
+        center:
+          x: -1000
+          y: 2000
+        radius: 2000
+        angular_velocity: 170
+      camp_comp: {}
+
+  - id: 101
+    name: "small_tank_a"
+    components:
+      transform_comp: { orientation_rotation_diff: 90 }
+      movement_comp: { speed: 3600, rotation_speed: 350, }
+      camp_comp: {}
+      collider_comp: { shape: "rect", width: 2000, height: 2000, is_rigidbody: true }
+      character_comp: { max_hp: 10000, max_level: 10 }
+    sub_entities:
+      - id: 1001 # 炮塔
+        name: "small_tower_a" # 炮塔是一个子实体
+        components:
+          tag_comp: { name: "tower" }
+          transform_comp: { orientation_rotation_diff: 90 } # 相对于车身的位置，本地坐标
+          movement_comp: { rotation_speed: 300 } # 相对于父实体的自转速度
+          shooting_comp: { pos: { x: 0, y: 1500 }, projectile: 8000, range: 20000, interval: 2000 }
+ 
+  - id: 102
+    name: "small_tank_b"
+    components:
+      transform_comp: { orientation_rotation_diff: 90 }
+      movement_comp: { speed: 3600, rotation_speed: 350 }
+      camp_comp: {}
+      collider_comp: { shape: "rect", width: 2000, height: 2000, is_rigidbody: true }
+      character_comp: { max_hp: 10000, max_level: 10 }
+    sub_entities:
+      - id: 1002 # 炮塔
+        name: "small_tower_b"
+        components:
+          tag_comp: { name: "tower" }
+          transform_comp: { orientation_rotation_diff: 90 }
+          movement_comp: { rotation_speed: 300 }
+          shooting_comp: { pos: { x: 0, y: 1500 }, projectile: 7000, range: 30000, interval: 1000 }
+
+  - id: 103
+    name: "small_tank_c"
+    components:
+      transform_comp: { orientation_rotation_diff: 90 }
+      movement_comp: { speed: 3650, rotation_speed: 150 }
+      camp_comp: {}
+      collider_comp: { shape: "rect", width: 2000, height: 2000, is_rigidbody: true }
+      character_comp: { max_hp: 10000, max_level: 10 }
+    sub_entities:
+      - id: 1003 # 炮塔
+        name: "small_tower_c"
+        components:
+          tag_comp: { name: "tower" }
+          transform_comp: { orientation_rotation_diff: 90 }
+          movement_comp: { rotation_speed: 300 }
+          shooting_comp: { pos: { x: 0, y: 800 }, projectile: 2001, range: 30000, interval: 1000 }
+
+  - id: 111
+    name: "medium_tank_a"
+    components:
+      transform_comp: { orientation_rotation_diff: 90 }
+      movement_comp: { speed: 3400, rotation_speed: 150 }
+      camp_comp: {}
+      collider_comp: { shape: "rect", width: 2000, height: 2000, is_rigidbody: true }
+      character_comp: { max_hp: 10000, max_level: 10 }
+    sub_entities:
+      - id: 1101 # 炮塔
+        name: "medium_tower_a"
+        components:
+          tag_comp: { name: "tower" }
+          transform_comp: { pos: { x: 0, y: -370 }, orientation_rotation_diff: 90 }
+          movement_comp: { rotation_speed: 300 }
+          shooting_comp: { pos: { x: 0, y: 1900 }, projectile: 2002, range: 30000, interval: 2000 }
+  
+  - id: 112
+    name: "medium_tank_b"
+    components:
+      transform_comp: { orientation_rotation_diff: 90 }
+      movement_comp: { speed: 3440, rotation_speed: 150 }
+      camp_comp: {}
+      collider_comp: { shape: "rect", width: 2000, height: 2000, is_rigidbody: true }
+      character_comp: { max_hp: 10000, max_level: 10 }
+    sub_entities:
+      - id: 1102
+        name: "medium_tower_b"
+        components:
+          tag_comp: { name: "tower" }
+          transform_comp: { pos: { x: 0, y: -370 }, orientation_rotation_diff: 90 }
+          movement_comp: { rotation_speed: 300 }
+          shooting_comp: { pos: { x: 0, y: 2000 }, projectile: 2002, range: 30000, interval: 2000 }
+
+  - id: 113
+    name: "medium_tank_c"
+    components:
+      transform_comp: { orientation_rotation_diff: 90 }
+      movement_comp: { speed: 3410, rotation_speed: 150 }
+      camp_comp: {}
+      collider_comp: { shape: "rect", width: 2000, height: 2000, is_rigidbody: true }
+      character_comp: { max_hp: 10000, max_level: 10 }
+    sub_entities:
+      - id: 1103
+        name: "medium_tower_c"
+        components:
+          tag_comp: { name: "tower" }
+          transform_comp: { pos: { x: 0, y: -370 }, orientation_rotation_diff: 90 }
+          movement_comp: { rotation_speed: 300 }
+          shooting_comp: { pos: { x: 0, y: 1750 }, projectile: 2002, range: 30000, interval: 2000 }
+
+  - id: 121
+    name: "heavy_tank_a"
+    components:
+      transform_comp: { orientation_rotation_diff: 90 }
+      movement_comp: { speed: 3300, rotation_speed: 120 }
+      camp_comp: {}
+      collider_comp: { shape: "rect", width: 2000, height: 2000, is_rigidbody: true }
+      character_comp: { max_hp: 20000, max_level: 10 }
+    sub_entities:
+      - id: 1201
+        name: "heavy_tower_a"
+        components:
+          tag_comp: { name: "tower" }
+          transform_comp: { pos: { x: 0, y: -370 }, orientation_rotation_diff: 90 }
+          movement_comp: { rotation_speed: 300 }
+          shooting_comp:
+            projectile: 2003
+            range: 44000
+            interval: 3000
+            pos_list: [ { x: -300, y: 2400 }, { x: 300, y: 2400 } ]
+  
+  - id: 122
+    name: "heavy_tank_b"
+    components:
+      transform_comp: { orientation_rotation_diff: 90 }
+      movement_comp: { speed: 3820, rotation_speed: 250 }
+      camp_comp: {}
+      collider_comp: { shape: "rect", width: 2000, height: 2000, is_rigidbody: true }
+      character_comp: { max_hp: 20000, max_level: 10 }
+    sub_entities:
+      - id: 1202
+        name: "heavy_tower_b"
+        components:
+          tag_comp: { name: "tower" }
+          transform_comp: { pos: { x: 0, y: 0}, orientation_rotation_diff: 90 }
+          movement_comp: { rotation_speed: 300 }
+          shooting_comp:
+            projectile: 7000
+            range: 35000
+            interval: 3000
+            pos_list: [ { x: -220, y: 1900 }, { x: 220, y: 2000 } ]
+
+  - id: 123
+    name: "heavy_tank_c"
+    components:
+      transform_comp: { orientation_rotation_diff: 90 }
+      movement_comp: { speed: 3430, rotation_speed: 100 }
+      camp_comp: {}
+      collider_comp: { shape: "rect", width: 2000, height: 2000, is_rigidbody: true }
+      character_comp: { max_hp: 2000, max_level: 10 }
+    sub_entities:
+      - id: 1203 # 炮塔
+        name: "heavy_tower_c"
+        components:
+          tag_comp: { name: "tower" }
+          transform_comp: { pos: { x: 0, y: -50 }, orientation_rotation_diff: 90 }
+          movement_comp: { rotation_speed: 300 }
+          shooting_comp:
+            projectile: 2003
+            range: 36000
+            interval: 3000
+            pos_list: [ { x: -220, y: 2020 }, { x: 220, y: 2020 } ]
+
+  - id: 130
+    name: "boss_tank"
+    components:
+      transform_comp: { pos: { x: 0, y: 0 }, orientation_rotation_diff: 90 }
+      movement_comp: { speed: 3500, rotation_speed: 90 }
+      camp_comp: {}
+      collider_comp: { shape: "rect", width: 3000, height: 3000, is_rigidbody: true }
+      character_comp: { max_hp: 40000, max_level: 20 }
+    sub_entities:
+      - id: 1300 # 炮塔
+        name: "boss_tower"
+        components:
+          tag_comp: { name: "tower" }
+          transform_comp: { pos: { x: 0, y: 1340 }, orientation_rotation_diff: 90 }
+          movement_comp: { rotation_speed: 300 }
+          shooting_comp:
+            projectile: 2003
+            range: 40000
+            interval: 3000
+            pos_list: [ { x: -600, y: 2600 }, { x: 150, y: 2700 }, { x: 900, y: 2600 } ]
+      - id: 1900 # 火箭发射架
+        name: "rocket_launcher"
+        components:
+          tag_comp: { name: "rocket_left" }
+          transform_comp: { pos: { x: -950, y: -2000 }, orientation_rotation_diff: 90 }
+          movement_comp: { rotation_speed: 300 }
+          shooting_comp:
+            projectile: 5000
+            range: 50000
+            interval: 3000
+            pos_list: [ { x: -200, y: 1200 }, { x: 200, y: 1200 } ]
+      - id: 1900 # 火箭发射架
+        name: "rocket_launcher"
+        components:
+          tag_comp: { name: "rocket_right" }
+          transform_comp: { pos: { x: 950, y: -2000 }, orientation_rotation_diff: 90 }
+          movement_comp: { rotation_speed: 300 }
+          shooting_comp:
+            projectile: 5000
+            range: 50000
+            interval: 3000
+            pos_list: [ { x: -200, y: 1200 }, { x: 200, y: 1200 } ]
+  
+  - id: 1400
+    name: "platform_a"
+    components:
+      transform_comp: { orientation_rotation_diff: 90 }
+      collider_comp: { shape: "rect", width: 2000, height: 2000, is_rigidbody: true }
+      character_comp: { max_hp: 10000, max_level: 10 }
+    sub_entities:
+      - id: 14000
+        name: "platform_a_tower"
+        components:
+          transform_comp: { orientation_rotation_diff: 90 }
+          movement_comp: { rotation_speed: 180 }
+          shooting_comp: { pos: { x: 0, y: 1500 }, projectile: 2002, range: 20000, interval: 3000 }
+
+  - id: 1401
+    name: "platform_b"
+    components:
+      transform_comp: { orientation_rotation_diff: 90 }
+      collider_comp: { shape: "rect", width: 2000, height: 2000, is_rigidbody: true }
+      character_comp: { max_hp: 10000, max_level: 10 }
+    sub_entities:
+      - id: 14001
+        name: "platform_b_tower"
+        components:
+          transform_comp: { orientation_rotation_diff: 90 }
+          movement_comp: { rotation_speed: 180 }
+          shooting_comp: { pos: { x: 0, y: 1500 }, projectile: 2002, range: 20000, interval: 3000 }
+
+  - id: 1402
+    name: "platform_c"
+    components:
+      transform_comp: { orientation_rotation_diff: 90 }
+      collider_comp: { shape: "rect", width: 2000, height: 2000, is_rigidbody: true }
+      character_comp: { max_hp: 10000, max_level: 10 }
+    sub_entities:
+      - id: 14002
+        name: "platform_c_tower"
+        components:
+          transform_comp: { orientation_rotation_diff: 90 }
+          movement_comp: { rotation_speed: 180 }
+          shooting_comp:
+            projectile: 2003
+            range: 20000
+            interval: 3000
+            pos_list: [ { x: -200, y: 1820 }, { x: 200, y: 1820 } ]
+
+  - id: 5 # 一般障碍物
+    name: "general_obstacle"
+    components:
+      camp_comp: { type: 0 }
+      invisible_comp: { value: true }
+      fence_comp: {}
+      transform_comp: {}
+      collider_comp: { is_rigidbody: true }

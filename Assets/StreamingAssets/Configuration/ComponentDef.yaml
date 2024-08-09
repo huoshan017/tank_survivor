@@ -1,0 +1,14 @@
+components:
+  - id: 1 # 变换组件
+    name: "TransformComponent"
+    members:
+      - name: "Position"
+        type: "Vector2"
+      - name: "Rotation"
+        type: "Angle"
+  - id: 2 # 移动组件
+    name: "MovementComponent"
+  - id: 3 # 输入组件
+    name: "InputComponent"
+  - id: 5 # 跟踪组件
+    name: "TrackingComponent"

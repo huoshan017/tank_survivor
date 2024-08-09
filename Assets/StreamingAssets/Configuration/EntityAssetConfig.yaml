@@ -1,0 +1,243 @@
+entity_assets:
+
+  - id: 5 # 因为时地图围栏障碍物，所以暂时不需要显示
+    prefab: "None"
+
+  - id: 12
+    prefab: "Prefabs/CircleMoveEntity"
+    component_script: "PlayableMoveEntity"
+
+  - id: 13
+    prefab: "Prefabs/CircleMoveEntity"
+    component_script: "PlayableMoveEntity"
+
+  # small_tank_a
+  - id: 101
+    prefab: "Prefabs/Tank/SmallTankA"
+    component_script: "PlayableTankWithTrackA"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+  
+  # bot_small_tank_a
+  - id: 100101
+    prefab: "Prefabs/Tank/SmallTankA"
+    component_script: "PlayableTankWithTrackA"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+
+  # small_tank_b
+  - id: 102
+    prefab: "Prefabs/Tank/SmallTankB"
+    component_script: "PlayableTankWithTrackA"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+  
+  # bot_small_tank_b
+  - id: 100102
+    prefab: "Prefabs/Tank/SmallTankB"
+    component_script: "PlayableTankWithTrackA"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+
+  # small_tank_c
+  - id: 103
+    prefab: "Prefabs/Tank/SmallTankC"
+    component_script: "PlayableTankWithTrackA"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+      
+  # bot_small_tank_c
+  - id: 100103
+    prefab: "Prefabs/Tank/SmallTankC"
+    component_script: "PlayableTankWithTrackA"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+
+  # media_tank_a
+  - id: 111
+    prefab: "Prefabs/Tank/MediumTankA"
+    component_script: "PlayableTankWithTrackA"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+
+  # bot_media_tank_a
+  - id: 100111
+    prefab: "Prefabs/Tank/MediumTankA"
+    component_script: "PlayableTankWithTrackA"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+
+  # media_tank_b
+  - id: 112
+    prefab: "Prefabs/Tank/MediumTankB"
+    component_script: "PlayableTankWithTrackA"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+  
+  # bot_media_tank_b
+  - id: 100112
+    prefab: "Prefabs/Tank/MediumTankB"
+    hpbar_offset: { x: -100, y: 2000 }
+    component_script: "PlayableTankWithTrackA"
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+
+  # media_tank_c
+  - id: 113
+    prefab: "Prefabs/Tank/MediumTankC"
+    component_script: "PlayableTankWithTrackB"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+  
+  # bot_media_tank_c
+  - id: 100113
+    prefab: "Prefabs/Tank/MediumTankC"
+    component_script: "PlayableTankWithTrackB"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+
+  # heavy_tank_a
+  - id: 121
+    prefab: "Prefabs/Tank/HeavyTankA"
+    component_script: "PlayableTankWithTrackD"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+  
+  # bot_heavy_tank_a
+  - id: 100121
+    prefab: "Prefabs/Tank/HeavyTankA"
+    component_script: "PlayableTankWithTrackD"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+        
+  # heavy_tank_b
+  - id: 122
+    prefab: "Prefabs/Tank/HeavyTankB"
+    component_script: "PlayableTankWithTrackC"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+  
+  # bot_heavy_tank_b
+  - id: 100122
+    prefab: "Prefabs/Tank/HeavyTankB"
+    component_script: "PlayableTankWithTrackC"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+
+  # heavy_tank_c
+  - id: 123 
+    prefab: "Prefabs/Tank/HeavyTankC"
+    component_script: "PlayableTankWithTrackD"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+  
+  # bot_heavy_tank_c
+  - id: 100123 
+    prefab: "Prefabs/Tank/HeavyTankC"
+    component_script: "PlayableTankWithTrackD"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+
+  # boss_tank
+  - id: 130
+    prefab: "Prefabs/Tank/BossTank"
+    component_script: "PlayableTankWithTrackC"
+    hpbar_offset: { x: -100, y: 4500 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+      - name: "RocketLeft"
+        component_script: "PlayableTankRocketLauncher"
+      - name: "RocketRight"
+        component_script: "PlayableTankRocketLauncher"
+  
+  # bot_boss_tank
+  - id: 100130
+    prefab: "Prefabs/Tank/BossTank"
+    component_script: "PlayableTankWithTrackC"
+    hpbar_offset: { x: -100, y: 4500 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+      - name: "RocketLeft"
+        component_script: "PlayableTankRocketLauncher"
+      - name: "RocketRight"
+        component_script: "PlayableTankRocketLauncher"
+
+  # light_shell
+  - id: 2001
+    prefab: "Prefabs/Projectile/LightShell"
+    component_script: "PlayableMoveEntity"
+
+  # medium_shell
+  - id: 2002
+    prefab: "Prefabs/Projectile/MediumShell"
+    component_script: "PlayableMoveEntity"
+
+  # heavy_shell
+  - id: 2003
+    prefab: "Prefabs/Projectile/HeavyShell"
+    component_script: "PlayableMoveEntity"
+
+  # plasma
+  - id: 4000
+    prefab: "Prefabs/Projectile/Plasma"
+    component_script: "PlayableMoveEntity"
+
+  # rocket
+  - id: 5000
+    prefab: "Prefabs/Projectile/Rocket"
+    component_script: "PlayableMoveEntity"
+
+  # round_mine
+  # - id: 6000
+  #  prefab: "Prefabs/RoundMine"
+  #  component_script: "PlayableMoveEntity"
+
+  # laser
+  - id: 7000
+    prefab: "Prefabs/Projectile/Beam2"
+    component_script: "PlayableBeam"
+
+  - id: 7001
+    prefab: "Prefabs/Projectile/Beam"
+    component_script: "PlayableBeam"
+
+  - id: 8000
+    prefab: "Prefabs/Projectile/Shockwave"
+    component_script: "PlayableShockwave"

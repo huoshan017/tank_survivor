@@ -1,0 +1,1 @@
+..\..\Plugins\protobuf-net\protogen.exe --csharp_out=.\ --proto_path=.\proto record.pb.proto

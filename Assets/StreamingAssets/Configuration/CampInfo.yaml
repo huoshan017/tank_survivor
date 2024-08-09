@@ -1,0 +1,23 @@
+camp_relations:
+  - type: 0 # 阵营0
+    relation_list: [ 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] # 与11个阵营的关系，数组索引表示阵营类型0-10
+  - type: 1 # 阵营1
+    relation_list: [ 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  - type: 2 # 阵营2
+    relation_list: [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  - type: 3 # 阵营3
+    relation_list: [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ]
+  - type: 4 # 阵营4
+    relation_list: [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 ]
+  - type: 5 # 阵营5
+    relation_list: [ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 ]
+  - type: 6 # 阵营6
+    relation_list: [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ]
+  - type: 7 # 阵营7
+    relation_list: [ 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 ]
+  - type: 8 # 阵营8
+    relation_list: [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 ]
+  - type: 9 # 阵营9
+    relation_list: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ]
+  - type: 10 # 阵营10
+    relation_list: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ]

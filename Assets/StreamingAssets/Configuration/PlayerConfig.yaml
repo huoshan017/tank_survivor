@@ -1,0 +1,4 @@
+player_config:
+  start_role_count: 10
+  default_role_index: 7
+  additional_component: "Logic.Component.InputComponent"

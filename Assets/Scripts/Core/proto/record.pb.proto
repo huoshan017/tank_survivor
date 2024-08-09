@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package Core;
+
+message PbCmdData {
+    int32 Code = 1;
+    repeated int64 Args = 2;
+}
+
+message PbPlayerFrame {
+    uint64 PlayerId = 1;
+    repeated PbCmdData CmdList = 2;
+}
+
+message PbFrameData {
+    uint32 FrameNum = 1;
+    repeated PbPlayerFrame PlayerList = 2;
+}
+
+message PbRecord {
+    string Name = 1; // 記錄名
+    int32 MapId = 2; // 地圖id
+    uint32 FrameMs = 3; // 每幀時間(毫秒)
+    uint32 FrameNum = 4; // 帧序号
+    repeated PbFrameData FrameList = 5; // 幀序列
+}

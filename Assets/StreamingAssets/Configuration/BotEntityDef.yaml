@@ -1,0 +1,71 @@
+entities_def:
+
+  - id: 100101
+    name: "bot_entity_1"
+    inherit: 101
+    components:
+      search_comp: { radius: 10000, target_relation: 2, intervals: 1000 }
+      behaviour_comp: {}
+
+  - id: 100102
+    name: "bot_entity_2"
+    inherit: 102
+    components:
+      search_comp: { radius: 10000, target_relation: 2, intervals: 1000 }
+      behaviour_comp: {}
+
+  - id: 100103
+    name: "bot_entity_3"
+    inherit: 103
+    components:
+      search_comp: { radius: 10000, target_relation: 2, intervals: 1000 }
+      behaviour_comp: {}
+
+  - id: 100111
+    name: "bot_entity_4"
+    inherit: 111
+    components:
+      search_comp: { radius: 10000, target_relation: 2, intervals: 1000 }
+      behaviour_comp: {}
+
+  - id: 100112
+    name: "bot_entity_5"
+    inherit: 112
+    components:
+      search_comp: { radius: 10000, target_relation: 2, intervals: 1000 }
+      behaviour_comp: {}
+  
+  - id: 100113
+    name: "bot_entity_6"
+    inherit: 113
+    components:
+      search_comp: { radius: 10000, target_relation: 2, intervals: 1000 }
+      behaviour_comp: {}
+
+  - id: 100121
+    name: "bot_entity_7"
+    inherit: 121
+    components:
+      search_comp: { radius: 10000, target_relation: 2, intervals: 1000 }
+      behaviour_comp: {}
+
+  - id: 100122
+    name: "bot_entity_8"
+    inherit: 122
+    components:
+      search_comp: { radius: 10000, target_relation: 2, intervals: 1000 }
+      behaviour_comp: {}
+
+  - id: 100123
+    name: "bot_entity_9"
+    inherit: 123
+    components:
+      search_comp: { radius: 10000, target_relation: 2, intervals: 1000 }
+      behaviour_comp: {}
+
+  - id: 100130
+    name: "bot_entity_10"
+    inherit: 130
+    components:
+      search_comp: { radius: 10000, target_relation: 2, intervals: 1000 }
+      behaviour_comp: {}

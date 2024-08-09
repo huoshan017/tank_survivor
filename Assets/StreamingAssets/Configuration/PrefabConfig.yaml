@@ -1,0 +1,15 @@
+prefabs:
+  pfx_list:
+    - name: "bullet_hit"
+      path: "Prefabs/Pfx/BulletHit"
+    - name: "build"
+      path: "Prefabs/Pfx/BuildPfx"
+    - name: "laser_impact"
+      path: "Prefabs/Pfx/LaserImpactPfx"
+    - name: "big_death_explosion"
+      path: "Prefabs/Pfx/BigDeathExplosionPfx"
+    - name: "rocket_explosion"
+      path: "Prefabs/Pfx/RocketExplosionPfx"
+  ui_list:
+    - name: "hp_bar"
+      path: "Prefabs/UI/HPBar"
