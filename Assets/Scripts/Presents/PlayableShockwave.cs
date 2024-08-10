@@ -16,6 +16,8 @@ public class PlayableShockwave : PlayableProjectile
         base.Attach(entity, assetConfig);
         particleSystem_ = gameObject.GetComponent<ParticleSystem>();
         laserParticleSystem_ = transform.GetChild(0).transform.GetChild(1).GetComponent<ParticleSystem>();
+        // 把光束的方向调整到XY坐标系
+        laserParticleSystem_.transform.Rotate(new Vector3(-90, 90, 0));
     }
 
     public override void Detach()
@@ -44,21 +46,8 @@ public class PlayableShockwave : PlayableProjectile
     {
         var logicPos = transformComp_.Pos;
         var origin = new Vector2(logicPos.X(), logicPos.Y())/GlobalConstant.LogicAndUnityRatio;
-        var hitPos = shootingInfo.Pos;
-
-        //var degree = shootingInfo.Dir.Degree() + (float)shootingInfo.Dir.Minute()/60;
-        //var eulerAngles = new Vector3(0, 0, degree);
-        //transform.eulerAngles = eulerAngles;
-        //particleSystem_.transform.eulerAngles = eulerAngles;
         particleSystem_.transform.position = origin;
-        particleSystem_.transform.LookAt(new Vector2(hitPos.X(), hitPos.Y())/GlobalConstant.LogicAndUnityRatio);
-        var distance = Position.Distance(logicPos, hitPos);
-        var lifeTime = laserParticleSystem_.main.startLifetime.constant;
-        var speed = distance/GlobalConstant.LogicAndUnityRatio/lifeTime;
-        var main = laserParticleSystem_.main;
-        main.startSpeed = speed;
         particleSystem_.Play();
-        DebugLog.Info("@@@ hitPos with shockwave " + hitPos.X() + ", " + hitPos.Y());
     }
 
     bool firstPlayed_;

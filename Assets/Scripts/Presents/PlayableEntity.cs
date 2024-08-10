@@ -93,17 +93,23 @@ public class PlayableEntity : MonoBehaviour
   // 击中事件处理
   protected virtual void OnHitHandle(HitInfo hitInfo)
   {
+    string hitPfxName = "";
     var ptype = hitInfo.HitEntityProjectile.CompDef.PType;
     if (ptype != ProjectileType.Beam && ptype != ProjectileType.Shockwave)
     {
-      var hitPfx = playableContext_.InstantiatePfxGameObject("bullet_hit", "Pfx");
-      if (hitPfx != null)
-      {
-        hitPfx.transform.position = new Vector2(hitInfo.Pos.X(), hitInfo.Pos.Y()) / GlobalConstant.LogicAndUnityRatio;
-        var ps = hitPfx.GetComponent<ParticleSystem>();
-        ps.Play();
-        playableContext_.RecyclePfxGameObject(hitPfx, (uint)(ps.main.duration * 1000));
-      }
+      hitPfxName = "bullet_hit";
+    }
+    else if (ptype == ProjectileType.Shockwave)
+    {
+      hitPfxName = "laser_impact";
+    }
+    if (hitPfxName != "")
+    {
+      var hitPfx = playableContext_.InstantiatePfxGameObject(hitPfxName, "Pfx");
+      hitPfx.transform.position = new Vector2(hitInfo.Pos.X(), hitInfo.Pos.Y()) / GlobalConstant.LogicAndUnityRatio;
+      var ps = hitPfx.GetComponent<ParticleSystem>();
+      ps.Play();
+      playableContext_.RecyclePfxGameObject(hitPfx, (uint)(ps.main.duration * 1000));
     }
     if (hitInfo.Damage > 0)
     {
