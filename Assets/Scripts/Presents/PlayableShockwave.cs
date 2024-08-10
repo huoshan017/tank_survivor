@@ -1,5 +1,3 @@
-using Common;
-using Common.Geometry;
 using Logic.Component;
 using Logic.Entity;
 using UnityEngine;

@@ -3,8 +3,6 @@ using Logic.Base;
 using Logic.Interface;
 using Logic.Component;
 using Logic.Reader;
-using System.Collections.Generic;
-using UnityEditor.Rendering;
 
 namespace Logic.System
 {

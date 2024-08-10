@@ -46,16 +46,24 @@ public class PlayableShooter : PlayableEntity
   {
     if (isShooting_)
     {
-      if (emitAudio_ == null)
-      {
-        emitAudio_ = gameObject.AddComponent<AudioSource>();
-        // TODO 发射的音效，要根据投射物的不同来配置，这里暂时简单使用同一个音效
-        emitAudio_.clip = Resources.Load<AudioClip>("Sounds/SFX/EnemyFire");
-      }
+      string audioName = "";
       var projectileId = emitInfo.ShootingComp.CompDef.Projectile;
       var projectDef = ConfigManager.GetEntityDef(projectileId);
       var projCompDef = projectDef.GetCompDerivedFromT<ProjectileCompDef>();
       if (projCompDef.PType != ProjectileType.Beam && projCompDef.PType != ProjectileType.Shockwave)
+      {
+        audioName = "Sounds/SFX/EnemyFire";
+      }
+      else if (projCompDef.PType == ProjectileType.Shockwave)
+      {
+        audioName = "Sounds/SFX/Towers/Laser/LaserFire";
+      }
+      if (emitAudio_ == null && audioName != "")
+      {
+        emitAudio_ = gameObject.AddComponent<AudioSource>();
+        emitAudio_.clip = Resources.Load<AudioClip>(audioName);
+      }
+      if (emitAudio_ != null)
       {
         emitAudio_.Play();
       }
