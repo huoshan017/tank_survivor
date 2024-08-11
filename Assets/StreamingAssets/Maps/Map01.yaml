@@ -3,9 +3,9 @@ name: "map01"
 bounds: { x: -80000, y: -64000, w: 160000, h: 128000 }
 grid: { width: 16000, height: 16000 }
 entities:
-  - id: 13
-    camp_data: { type: 1 }
-    transform_data: { pos: { x: 2000, y: -4000} }
+  #- id: 13
+  #  camp_data: { type: 1 }
+  #  transform_data: { pos: { x: 2000, y: -4000} }
   - id: 100101
     camp_data: { type: 1 }
     transform_data: { pos: { x: -3000, y: 9000}, rotation: 100 }

@@ -159,12 +159,12 @@ public class PlayableEntity : MonoBehaviour
   {
     if (hpBarObj_ == null && hasHp)
     {
-      hpBarObj_ = playableContext_.InstantiateUiGameObject("hp_bar", "ui");
+      hpBarObj_ = playableContext_.InstantiateUiGameObject("hp_bar", "Ui");
     }
     if (hpBarObj_ != null)
     {
       var hpbarOffset = assetConfig_.HpBarOffset;
-      hpBarObj_.transform.position = new Vector2(transformComp_.Pos.X()+hpbarOffset.X(), transformComp_.Pos.Y()+hpbarOffset.Y())/GlobalConstant.LogicAndUnityRatio;
+      hpBarObj_.transform.position = new Vector3(transformComp_.Pos.X()+hpbarOffset.X(), transformComp_.Pos.Y()+hpbarOffset.Y(), HPBar.ZHeight)/GlobalConstant.LogicAndUnityRatio;
       if (hpBarObj_.TryGetComponent<HPBar>(out var hpBar))
       {
         hpBar.UpdateHealth((float)charComp_.Hp/charComp_.MaxHp);

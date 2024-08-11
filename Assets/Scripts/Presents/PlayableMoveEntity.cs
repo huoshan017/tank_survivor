@@ -1,3 +1,6 @@
+using Common;
+using Common.Geometry;
+using Logic;
 using Logic.Component;
 using Logic.Entity;
 using UnityEngine;
@@ -9,11 +12,20 @@ public class PlayableMoveEntity : PlayableEntity
   {
     base.Update();
     transform.localEulerAngles = new Vector3(0, 0, RotateDegree());
-    if (posUpdated_)
+    //if (posUpdated_)
+    if (state_ == MoveState.Moving)
     {
-      //lastLogicPos_ = Movement.LinearMove(lastLogicPos_, movementComp_.Speed, movementComp_.MoveDir, (uint)(Time.deltaTime*1000));
-      transform.localPosition = new Vector3(lastLogicPos_.X(), lastLogicPos_.Y(), 0) / GlobalConstant.LogicAndUnityRatio;
-      posUpdated_ = false;
+      //var nextPos = movementComp_.NextMovePos(entity_.Context.FrameMs());
+      //transform.position = new Vector3(lastLogicPos_.X(), lastLogicPos_.Y(), 0) / GlobalConstant.LogicAndUnityRatio;
+      lerpTotalDeltaTime_ += Time.deltaTime;
+      transform.position = Vector3.Lerp(
+        new Vector3(lastLogicPos_.X(), lastLogicPos_.Y(), 0)/GlobalConstant.LogicAndUnityRatio,
+        new Vector3(nextPos_.X(), nextPos_.Y(), 0)/GlobalConstant.LogicAndUnityRatio,
+        lerpTotalDeltaTime_*1000/entity_.Context.FrameMs());
+      //if (movementComp_.IsMoving())
+      {
+        DebugLog.Info("entity " + entity_.InstId() + " transform position (" + transform.position.x + ", " + transform.position.y + ")");
+      }
     }
 
     // TODO 画出包围盒，用于调试
@@ -64,12 +76,16 @@ public class PlayableMoveEntity : PlayableEntity
   {
     // 更新当前显示位置
     lastLogicPos_ = transformComp_.Pos;
-    posUpdated_ = true;
+    nextPos_ = movementComp_.NextMovePos(entity_.Context.FrameMs());
+    lerpTotalDeltaTime_ = 0;
+    DebugLog.Info("entity " + entity_.InstId() + " real position (" + (float)lastLogicPos_.X()/GlobalConstant.LogicAndUnityRatio + ", " + (float)lastLogicPos_.Y()/GlobalConstant.LogicAndUnityRatio);
+    DebugLog.Info("entity " + entity_.InstId() + " next position (" + (float)nextPos_.X()/GlobalConstant.LogicAndUnityRatio + ", " + (float)nextPos_.Y()/GlobalConstant.LogicAndUnityRatio);
   }
 
   // 移动事件处理
   protected virtual void OnMoveHandle()
   {
+    state_ = MoveState.Moving;
   }
 
   // 停止移动事件处理
@@ -77,9 +93,18 @@ public class PlayableMoveEntity : PlayableEntity
   {
     // 更新当前显示位置
     lastLogicPos_ = transformComp_.Pos;
-    posUpdated_ = true;
+    nextPos_ = movementComp_.NextMovePos(entity_.Context.FrameMs());
+    lerpTotalDeltaTime_ = 0;
+    state_ = MoveState.Stopped;
   }
 
   protected MovementComponent movementComp_;
-  bool posUpdated_;
+  enum MoveState
+  {
+    Stopped = 0,
+    Moving = 1,
+  }
+  MoveState state_;
+  Position nextPos_;
+  float lerpTotalDeltaTime_;
 }

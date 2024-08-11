@@ -134,7 +134,8 @@ public class PlayableWorld : MonoBehaviour, IPlayableContext
           throw new Exception("Cant found Root GameObject");
         }
       }
-      playableEntity.transform.parent = root_.transform;
+      var entitiesNode = CheckAndBuildParentNode("Entities");
+      playableEntity.transform.parent = entitiesNode.transform;
     }
 
     return obj;
@@ -227,13 +228,7 @@ public class PlayableWorld : MonoBehaviour, IPlayableContext
 
   public GameObject InstantiatePfxGameObject(string name, string parent)
   {
-    nodeDict_ ??= new();
-    if (!nodeDict_.TryGetValue(parent, out var parentNode))
-    {
-      parentNode = new GameObject(parent);
-      parentNode.transform.parent = root_.transform;
-      nodeDict_.Add(parent, parentNode);
-    }
+    var parentNode = CheckAndBuildParentNode(parent);
     var pfx = prefabManager_.InstantiatePfx(name);
     pfx.transform.parent = parentNode.transform;
     return pfx;
@@ -256,13 +251,7 @@ public class PlayableWorld : MonoBehaviour, IPlayableContext
 
   public GameObject InstantiateUiGameObject(string name, string parent)
   {
-    nodeDict_ ??= new();
-    if (!nodeDict_.TryGetValue(parent, out var parentNode))
-    {
-      parentNode = new GameObject(parent);
-      parentNode.transform.parent = root_.transform;
-      nodeDict_.Add(parent, parentNode);
-    }
+    var parentNode = CheckAndBuildParentNode(parent);
     var ui = prefabManager_.InstantiateUi(name);
     ui.transform.parent = parentNode.transform;
     return ui;
@@ -271,6 +260,18 @@ public class PlayableWorld : MonoBehaviour, IPlayableContext
   public bool RecycleUiGameObject(GameObject uiObj)
   {
     return prefabManager_.RecycleUiGameObject(uiObj);
+  }
+
+  GameObject CheckAndBuildParentNode(string parent)
+  {
+    nodeDict_ ??= new();
+    if (!nodeDict_.TryGetValue(parent, out var parentNode))
+    {
+      parentNode = new GameObject(parent);
+      parentNode.transform.parent = root_.transform;
+      nodeDict_.Add(parent, parentNode);
+    }
+    return parentNode;
   }
 
   World world_;

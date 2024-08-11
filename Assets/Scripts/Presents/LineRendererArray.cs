@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LineRendererArray
 {
-    Transform parent_;
+    readonly Transform parent_;
     GameObject[] gameObjectLineArray_;
     GameObject[] gameObjectColumnArray_;
     LineRenderer[] lineRenderersLineArray_;

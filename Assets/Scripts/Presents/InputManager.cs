@@ -110,6 +110,15 @@ public class InputManager : MonoBehaviour
         {
             gameManager_.PushSyncPlayerCmd(GlobalConstant.DefaultSinglePlayerId, new CmdData{ Cmd=CommandDefine.CmdStopFire });
         }
+
+        if (Camera.main.orthographic)
+        {
+          Camera.main.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * 10;
+        }
+        else
+        {
+          Camera.main.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * 10;
+        }
     }
 
     public void Attach(GameManager gameManager)

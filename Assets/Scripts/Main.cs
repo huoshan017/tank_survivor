@@ -13,12 +13,12 @@ public class Main : MonoBehaviour
     void Awake()
     {
         DebugLog.SetDebug(new SDebugger());
-        gameMgr_ = new GameManager(new GameArgs{PlayerNum=1, FrameMs=25});
+        gameMgr_ = new GameManager(new GameArgs{PlayerNum=1, FrameMs=33});
         playableWorld_ = gameObject.AddComponent<PlayableWorld>();
         playableWorld_.Attach(gameMgr_.GetInst().GetGame().GetWorld());
         inputManager_ = gameObject.AddComponent<InputManager>();
         inputManager_.Attach(gameMgr_);
-        Application.targetFrameRate = 50;
+        Application.targetFrameRate = 120;
         #if UNITY_EDITOR
         EditorApplication.pauseStateChanged += OnPauseStateChanged;
         #endif

@@ -3,6 +3,7 @@ using Common.Geometry;
 using Logic.Interface;
 using Logic.Component;
 using Logic.Base;
+using Common;
 
 namespace Logic.System
 {
@@ -125,6 +126,7 @@ namespace Logic.System
         {
           movementComp.UpdatePos(frameMs, pos, false);
         }
+        //DebugLog.Info("entity " + entity.InstId() + " update pos (" + pos.X() + ", " + pos.Y() + ")");
       }
       else
       {

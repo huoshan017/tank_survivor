@@ -95,14 +95,11 @@ namespace Logic.System
       {
         var entity2 = GetEntity(kv.entityInstId);
         if (entity2 == null) continue;
-        (result, entityPos) = TwoEntityContactResult(entity, entityPos, kv.x, kv.y, kv.contactPoint, entity2);
+        result = TwoEntityContactResult(entity, entityPos, kv.x, kv.y, kv.contactPoint, entity2);
         if (result == CollisionResult.Blocked)
         {
+          entityPos.Translate(kv.x, kv.y);
           nextPos = entityPos;
-          break;
-        }
-        else if (result == CollisionResult.Disappear)
-        {
           break;
         }
         if (!entity.IsActive())
@@ -114,7 +111,7 @@ namespace Logic.System
       return (nextPos, result);
     }
 
-    (CollisionResult, Position) TwoEntityContactResult(IEntity entity, Position entityPos, int nextDx, int nextDy, Position contactPoint, IEntity entity2)
+    CollisionResult TwoEntityContactResult(IEntity entity, Position entityPos, int nextDx, int nextDy, Position contactPoint, IEntity entity2)
     {
       var colliderComp = entity.GetComponent<ColliderComponent>();
       var colliderComp2 = entity2.GetComponent<ColliderComponent>();
@@ -125,13 +122,13 @@ namespace Logic.System
       // 互相阻挡的实体默认结果是停止移动，距离更远的实体就不用处理了
       if (colliderComp.IsRigidBody && colliderComp2.IsRigidBody)
       {
-        entityPos.Translate(nextDx, nextDy);
+        //entityPos.Translate(nextDx, nextDy);
         result = CollisionResult.Blocked;
       }
 
       SystemPolicy.DoCollision(context_.SystemList(), entity, entity2, contactPoint);
 
-      return (result, entityPos);
+      return result;
     }
 
     static (int, int, bool) RealDistanceOfColliderMove2Collider(in ColliderComponent collider1, in ColliderComponent collider2, int dx, int dy, out Position contactPoint)

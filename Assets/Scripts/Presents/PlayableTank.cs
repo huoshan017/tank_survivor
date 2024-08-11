@@ -4,12 +4,10 @@ using UnityEngine;
 public class PlayableTank : PlayableMoveEntity
 {
   protected Animator[] tracks_;
-  protected Vector3 gravity_;
 
   protected new void Start()
   {
     base.Start();
-    gravity_ = new Vector3(0, 0, -9.81f);
   }
 
   public override void Attach(Entity entity, AssetConfig assetConfig)
@@ -28,11 +26,6 @@ public class PlayableTank : PlayableMoveEntity
   {
     base.Detach();
     tracks_ = null;
-  }
-
-  protected void FixedUpdate()
-  {
-    Physics.gravity = gravity_;
   }
 
   protected void OnDestroy()
