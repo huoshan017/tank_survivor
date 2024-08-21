@@ -4,6 +4,7 @@ using Logic.Interface;
 
 namespace Logic.Component
 {
+
     public class SearchCompDef : CompDef
     {
         public int Radius; // 半径
@@ -54,7 +55,17 @@ namespace Logic.Component
 
         public bool CanSearch(uint currMs)
         {
-            return lastSearchMs_ == 0 || currMs-lastSearchMs_>=compDef_.Intervals;
+            return lastSearchMs_ == 0 || currMs - lastSearchMs_ >= compDef_.Intervals;
+        }
+
+        public bool CheckAndSetSearched(uint currMs)
+        {
+            bool canSearch = lastSearchMs_ == 0 || currMs - lastSearchMs_ >= compDef_.Intervals;
+            if (canSearch)
+            {
+                lastSearchMs_ = currMs;
+            }
+            return canSearch;
         }
 
         public uint TargetEntityInstId

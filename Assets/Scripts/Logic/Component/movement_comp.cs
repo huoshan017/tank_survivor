@@ -3,6 +3,7 @@ using Common;
 using Common.Geometry;
 using Logic.Interface;
 using Logic.Base;
+using System.Diagnostics.Tracing;
 
 namespace Logic.Component
 {
@@ -109,11 +110,15 @@ namespace Logic.Component
     // 设置下个位置
     bool setNextPos_;
     // 移动事件
-    protected event Action moveEvent_;
+    protected event Action MoveEvent_;
     // 停止移动事件
-    protected event Action stopMoveEvent_;
+    protected event Action StopMoveEvent_;
     // 更新事件
-    protected event Action updateEvent_;
+    protected event Action UpdateEvent_;
+    // 旋转开始事件
+    protected event Action<Angle> RotateStartEvent_;
+    // 旋转结束事件
+    protected event Action RotateEndEvent_;
 
     public MovementComponent(IComponentContainer container) : base(container)
     {
@@ -147,32 +152,30 @@ namespace Logic.Component
         else
         {
           isRotating_ = false;
+          RotateEndEvent_?.Invoke();
         }
       }
 
       if (currState_ == MoveState.idle)
       {
-        if (prevState_ == MoveState.toStop)
-        {
-          stopMoveEvent_?.Invoke();
-        }
         return;
       }
 
       if (currState_ == MoveState.toMove)
       {
         SetState(MoveState.moving);
-        moveEvent_?.Invoke();
+        MoveEvent_?.Invoke();
       }
 
       if (setNextPos_) { transform_.Pos = nextPos_; setNextPos_ = false; }
       else { transform_.Pos = NextMovePos(frameMs); }
 
-      updateEvent_?.Invoke();
+      UpdateEvent_?.Invoke();
 
       if (currState_ == MoveState.toStop)
       {
         SetState(MoveState.idle);
+        StopMoveEvent_?.Invoke();
       }
     }
 
@@ -184,6 +187,7 @@ namespace Logic.Component
       if (!transform_.Orientation.Equal(moveDir))
       {
         isRotating_ = true;
+        RotateStartEvent_?.Invoke(moveDir);
       }
       if (currState_ == MoveState.idle)
       {
@@ -240,6 +244,12 @@ namespace Logic.Component
       }
     }
 
+    // 是否在转动
+    public bool IsRotating()
+    {
+      return isRotating_;
+    }
+
     public Position NextMovePos(uint frameMs)
     {
       Position pos = new();
@@ -275,6 +285,14 @@ namespace Logic.Component
       Update(frameMs);
     }
 
+    public Angle NextRotation(uint frameMs)
+    {
+      var deltaDegree = (int)(compDef_.RotationSpeed * frameMs / 1000);
+      var angle = transform_.Rotation;
+      angle.Set(60*(angle.Degree()+deltaDegree) + angle.Minute());
+      return angle;
+    }
+
     // 检测是否可移动
     bool CheckMove()
     {
@@ -290,37 +308,61 @@ namespace Logic.Component
     // 注册移动事件
     public void RegisterMoveEvent(Action action)
     {
-      moveEvent_ += action;
+      MoveEvent_ += action;
     }
 
     // 注销移动事件
     public void UnregisterMoveEvent(Action action)
     {
-      moveEvent_ -= action;
+      MoveEvent_ -= action;
     }
 
     // 注册停止移动事件
     public void RegisterStopMoveEvent(Action action)
     {
-      stopMoveEvent_ += action;
+      StopMoveEvent_ += action;
     }
 
     // 注销停止移动事件
     public void UnregisterStopMoveEvent(Action action)
     {
-      stopMoveEvent_ -= action;
+      StopMoveEvent_ -= action;
     }
 
     // 注册更新事件
     public void RegisterUpdateEvent(Action action)
     {
-      updateEvent_ += action;
+      UpdateEvent_ += action;
     }
 
     // 注销更新事件
     public void UnregisterUpdateEvent(Action action)
     {
-      updateEvent_ -= action;
+      UpdateEvent_ -= action;
+    }
+
+    // 注册旋转开始事件
+    public void RegisterRotateStartEvent(Action<Angle> action)
+    {
+      RotateStartEvent_ += action;
+    }
+
+    // 注销旋转开始事件
+    public void UnregisterRotateStartEvent(Action<Angle> action)
+    {
+      RotateStartEvent_ -= action;
+    }
+    
+    // 注册旋转结束事件
+    public void RegisterRotateEndEvent(Action action)
+    {
+      RotateEndEvent_ += action;
+    }
+
+    // 注销旋转结束事件
+    public void UnregsiterRotateEndEvent(Action action)
+    {
+      RotateEndEvent_ -= action;
     }
 
     public Angle MoveDir

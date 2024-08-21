@@ -1,6 +1,5 @@
 using Common;
 using Common.Geometry;
-using Logic;
 using Logic.Component;
 using Logic.Entity;
 using UnityEngine;
@@ -10,41 +9,30 @@ public class PlayableMoveEntity : PlayableEntity
   // Update is called once per frame
   protected new void Update()
   {
-    base.Update();
-    transform.localEulerAngles = new Vector3(0, 0, RotateDegree());
-    //if (posUpdated_)
-    if (state_ == MoveState.Moving)
+    if (/*logicPosUpdated_ &&*/ (state_ == MoveState.Moving || state_ == MoveState.ToStop))
     {
-      //var nextPos = movementComp_.NextMovePos(entity_.Context.FrameMs());
-      //transform.position = new Vector3(lastLogicPos_.X(), lastLogicPos_.Y(), 0) / GlobalConstant.LogicAndUnityRatio;
-      lerpTotalDeltaTime_ += Time.deltaTime;
-      transform.position = Vector3.Lerp(
+      //transform.localPosition = new Vector3(currLogicPos_.X(), currLogicPos_.Y(), 0) / GlobalConstant.LogicAndUnityRatio;
+      //logicPosUpdated_ = false;
+      transform.localPosition = Vector3.Lerp(
         new Vector3(lastLogicPos_.X(), lastLogicPos_.Y(), 0)/GlobalConstant.LogicAndUnityRatio,
-        new Vector3(nextPos_.X(), nextPos_.Y(), 0)/GlobalConstant.LogicAndUnityRatio,
-        lerpTotalDeltaTime_*1000/entity_.Context.FrameMs());
-      //if (movementComp_.IsMoving())
+        new Vector3(currLogicPos_.X(), currLogicPos_.Y(), 0)/GlobalConstant.LogicAndUnityRatio,
+        moveLerpTotalDeltaTime_*1000/entity_.Context.FrameMs()
+      );
+      moveLerpTotalDeltaTime_ += Time.deltaTime;      
+      if (state_ == MoveState.ToStop)
       {
-        DebugLog.Info("entity " + entity_.InstId() + " transform position (" + transform.position.x + ", " + transform.position.y + ")");
+        state_ = MoveState.Stopped;
+        DebugLog.Info("playable move entity " + entity_.InstId() + " stopped");
       }
+      DebugLog.Info("unity transform pos: x " + transform.localPosition.x + ", y " + transform.localPosition.y + "     curr logic pos: x" + currLogicPos_.X() + ", y " + currLogicPos_.Y());
     }
-
-    // TODO 画出包围盒，用于调试
-    var colliderComp = entity_.GetComponent<ColliderComponent>();
-    if (colliderComp != null && colliderComp.GetAABB(out var r))
+    base.Update();
+    if (isRotating_)
     {
-      var lb = r.LeftBottom();
-      var rb = r.RightBottom();
-      var rt = r.RightTop();
-      var lt = r.LeftTop();
-      var lbv2 = new Vector2(lb.X(), lb.Y()) / GlobalConstant.LogicAndUnityRatio;
-      var rbv2 = new Vector2(rb.X(), rb.Y()) / GlobalConstant.LogicAndUnityRatio;
-      var rtv2 = new Vector2(rt.X(), rt.Y()) / GlobalConstant.LogicAndUnityRatio;
-      var ltv2 = new Vector2(lt.X(), lt.Y()) / GlobalConstant.LogicAndUnityRatio;
-      Debug.DrawLine(lbv2, rbv2, Color.red);
-      Debug.DrawLine(rbv2, rtv2, Color.red);
-      Debug.DrawLine(rtv2, ltv2, Color.red);
-      Debug.DrawLine(ltv2, lbv2, Color.red);
-    }
+      rotateLerpTotalDeltaTime_ += Time.deltaTime;
+      var a = transformComp_.RotateGetRotationResult(movementComp_.CompDef.RotationSpeed, (uint)(rotateLerpTotalDeltaTime_*1000), targetDir_, true);
+      transform.eulerAngles = new Vector3(0, 0, a.Degree() + a.Minute()/60);
+    }   
   }
 
   public override void Attach(Entity entity, AssetConfig assetConfig)
@@ -56,6 +44,8 @@ public class PlayableMoveEntity : PlayableEntity
       movementComp_.RegisterUpdateEvent(OnUpdateHandle);
       movementComp_.RegisterMoveEvent(OnMoveHandle);
       movementComp_.RegisterStopMoveEvent(OnStopMoveHandle);
+      movementComp_.RegisterRotateStartEvent(OnRotateStartHandle);
+      movementComp_.RegisterRotateEndEvent(OnRotateEndHandle);
     }
   }
 
@@ -64,6 +54,8 @@ public class PlayableMoveEntity : PlayableEntity
     base.Detach();
     if (movementComp_ != null)
     {
+      movementComp_.UnregsiterRotateEndEvent(OnRotateEndHandle);
+      movementComp_.UnregisterRotateStartEvent(OnRotateStartHandle);
       movementComp_.UnregisterUpdateEvent(OnUpdateHandle);
       movementComp_.UnregisterMoveEvent(OnMoveHandle);
       movementComp_.UnregisterStopMoveEvent(OnStopMoveHandle);
@@ -75,36 +67,60 @@ public class PlayableMoveEntity : PlayableEntity
   protected virtual void OnUpdateHandle()
   {
     // 更新当前显示位置
-    lastLogicPos_ = transformComp_.Pos;
-    nextPos_ = movementComp_.NextMovePos(entity_.Context.FrameMs());
-    lerpTotalDeltaTime_ = 0;
-    DebugLog.Info("entity " + entity_.InstId() + " real position (" + (float)lastLogicPos_.X()/GlobalConstant.LogicAndUnityRatio + ", " + (float)lastLogicPos_.Y()/GlobalConstant.LogicAndUnityRatio);
-    DebugLog.Info("entity " + entity_.InstId() + " next position (" + (float)nextPos_.X()/GlobalConstant.LogicAndUnityRatio + ", " + (float)nextPos_.Y()/GlobalConstant.LogicAndUnityRatio);
+    UpdatePos(false);
+    moveLerpTotalDeltaTime_ = 0;
+    logicPosUpdated_ = true;
   }
 
   // 移动事件处理
   protected virtual void OnMoveHandle()
   {
+    UpdatePos(false);
     state_ = MoveState.Moving;
+    logicPosUpdated_ = true;
   }
 
   // 停止移动事件处理
   protected virtual void OnStopMoveHandle()
   {
     // 更新当前显示位置
-    lastLogicPos_ = transformComp_.Pos;
-    nextPos_ = movementComp_.NextMovePos(entity_.Context.FrameMs());
-    lerpTotalDeltaTime_ = 0;
-    state_ = MoveState.Stopped;
+    UpdatePos(false);
+    moveLerpTotalDeltaTime_ = 0;
+    state_ = MoveState.ToStop;
+    logicPosUpdated_ = true;
+  }
+
+  // 旋转开始事件处理
+  protected virtual void OnRotateStartHandle(Angle targetDir)
+  {
+    isRotating_ = true;
+    lastRotation_ = transformComp_.Rotation;
+    targetDir_ = targetDir;
+    rotateLerpTotalDeltaTime_ = 0;
+  }
+
+  // 旋转结束事件处理
+  protected virtual void OnRotateEndHandle()
+  {
+    isRotating_ = false;
+  }
+
+  protected float TargetDirDegree()
+  {
+    return targetDir_.Degree() + (float)targetDir_.Minute() / 60;
   }
 
   protected MovementComponent movementComp_;
+  protected bool logicPosUpdated_;
   enum MoveState
   {
     Stopped = 0,
     Moving = 1,
+    ToStop = 2,
   }
   MoveState state_;
-  Position nextPos_;
-  float lerpTotalDeltaTime_;
+  bool isRotating_;
+  Angle targetDir_;
+  float moveLerpTotalDeltaTime_;
+  float rotateLerpTotalDeltaTime_;
 }

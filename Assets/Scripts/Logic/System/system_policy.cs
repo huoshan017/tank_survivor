@@ -23,11 +23,11 @@ namespace Logic.System
           config = new CompTypeConfig{
             CompTypeList = new Type[] {
               typeof(ColliderComponent),
-              typeof(TransformComponent)
+              //typeof(TransformComponent)
             },
-            NoCompTypeList = new Type[] {
-              typeof(FenceComponent),
-            }
+            //NoCompTypeList = new Type[] {
+            //  typeof(FenceComponent),
+            //}
           }
         },
         new() {
@@ -44,8 +44,8 @@ namespace Logic.System
           system = new CollisionSystem(context),
           config = new CompTypeConfig {
             CompTypeList = new Type[] {
-              typeof(FenceComponent),
-              typeof(TransformComponent),
+              //typeof(FenceComponent),
+              //typeof(TransformComponent),
               typeof(ColliderComponent)
             }
           }
@@ -55,7 +55,7 @@ namespace Logic.System
           system = new MoveSystem(context),
           config = new CompTypeConfig {
             CompTypeList = new Type[] {
-              typeof(TransformComponent),
+              //typeof(TransformComponent),
               typeof(MovementComponent),
             }
           }
@@ -82,7 +82,9 @@ namespace Logic.System
           // 生命期系统
           system = new LifeSystem(context),
           config = new CompTypeConfig {
-            CompTypeList = new Type[] { typeof(LifeTimeComponent) }
+            CompTypeList = new Type[] {
+              typeof(LifeTimeComponent)
+            }
           }
         },
         new() {

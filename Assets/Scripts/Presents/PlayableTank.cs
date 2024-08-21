@@ -28,14 +28,6 @@ public class PlayableTank : PlayableMoveEntity
     tracks_ = null;
   }
 
-  protected void OnDestroy()
-  {
-    if (hpBarObj_ != null)
-    {
-      playableContext_.RecycleUiGameObject(hpBarObj_);
-    }
-  }
-
   protected override void OnMoveHandle()
   {
     base.OnMoveHandle();

@@ -1,7 +1,12 @@
 entity_assets:
 
   - id: 5 # 因为时地图围栏障碍物，所以暂时不需要显示
-    prefab: "None"
+    prefab: "Prefabs/Entity"
+    component_script: "PlayableEntity"
+  
+  - id: 6 # 因为时地图围栏障碍物，所以暂时不需要显示
+    prefab: "Prefabs/Entity"
+    component_script: "PlayableEntity"
 
   - id: 12
     prefab: "Prefabs/CircleMoveEntity"
@@ -198,6 +203,60 @@ entity_assets:
         component_script: "PlayableTankRocketLauncher"
       - name: "RocketRight"
         component_script: "PlayableTankRocketLauncher"
+
+  # platform_a
+  - id: 1400
+    prefab: "Prefabs/Turret/PlatformA"
+    component_script: "PlayableEntity"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+
+  # bot_platform_a
+  - id: 1001400
+    prefab: "Prefabs/Turret/PlatformA"
+    component_script: "PlayableEntity"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+        
+  # platform_b
+  - id: 1401
+    prefab: "Prefabs/Turret/PlatformB"
+    component_script: "PlayableEntity"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+
+  # bot_platform_b
+  - id: 1001401
+    prefab: "Prefabs/Turret/PlatformB"
+    component_script: "PlayableEntity"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+
+  # platform_c
+  - id: 1402
+    prefab: "Prefabs/Turret/PlatformC"
+    component_script: "PlayableEntity"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
+
+  # bot_platform_c
+  - id: 1001402
+    prefab: "Prefabs/Turret/PlatformC"
+    component_script: "PlayableEntity"
+    hpbar_offset: { x: -100, y: 2000 }
+    sub_objs:
+      - name: "Tower"
+        component_script: "PlayableTankTower"
 
   # light_shell
   - id: 2001

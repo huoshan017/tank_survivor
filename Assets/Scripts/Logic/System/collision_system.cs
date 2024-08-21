@@ -50,18 +50,6 @@ namespace Logic.System
     {
     }
 
-    public void ForeachFence(Action<IEntity> action)
-    {
-      entityList_.Foreach((uint entityInstId, uint _) =>
-      {
-        var entity = GetEntity(entityInstId);
-        if (entity != null)
-        {
-          action(entity);
-        }
-      });
-    }
-
     // 一个实体与一堆实体的碰撞结果
     internal (Position, CollisionResult) GetEntityCollisionsResult(IEntity entity, Position nextPos, IEnumerable<IEntity> collisionEntityList)
     {
@@ -137,24 +125,24 @@ namespace Logic.System
       contactPoint = new();
       var shapeType = collider1.CompDef.Shape.GetShapeType();
       var shapeType2 = collider2.CompDef.Shape.GetShapeType();
-      if (shapeType == BoundingShapeType.Rect)
+      if (shapeType == ShapeType.Rect)
       {
         collider1.GetRect(out var rect);
-        if (shapeType2 == BoundingShapeType.Rect)
+        if (shapeType2 == ShapeType.Rect)
         {
           collider2.GetRect(out var rect2);
           (dx, dy, isContact) = RealDistanceOfRectMoveToRect(rect, rect2, dx, dy, out contactPoint);
         }
-        else if (shapeType2 == BoundingShapeType.Circle)
+        else if (shapeType2 == ShapeType.Circle)
         {
           collider2.GetCircle(out var circle2);
           (dx, dy, isContact) = RealDistanceOfRectMoveToCircle(rect, circle2, dx, dy, out contactPoint);
         }
       }
-      else if (shapeType == BoundingShapeType.Circle)
+      else if (shapeType == ShapeType.Circle)
       {
         collider1.GetCircle(out var circle);
-        if (shapeType2 == BoundingShapeType.Rect)
+        if (shapeType2 == ShapeType.Rect)
         {
           collider2.GetRect(out var rect2);
           (dx, dy, isContact) = RealDistanceOfCircleMoveToRect(circle, rect2, dx, dy, out contactPoint);

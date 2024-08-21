@@ -141,6 +141,7 @@ namespace Logic.Component
       get
       {
         CheckAndBuildChildTagList();
+        if (childTagList_ == null) return "";
         return childTagList_[childTagIndex_];
       }
     }
@@ -150,12 +151,14 @@ namespace Logic.Component
       get
       {
         CheckAndBuildChildTagList();
+        if (childTagList_ == null) return "";
         return childTagList_[0];
       }
     }
 
     public void Move2NextChildTag()
     {
+      if (childTagList_ == null) return;
       childTagIndex_ = (childTagIndex_+1)%childTagList_.Count;
     }
 

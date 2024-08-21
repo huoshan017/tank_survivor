@@ -150,14 +150,14 @@ namespace Logic.System
 
             // TODO 网格的宽和高必须是实体矩形的宽高的1.5倍以上，为了保证实体矩形在旋转一定角度后还能维持在宽松包围盒的范围内
             //if (gridWidth_ < aabbComp.CompDef.Width * 1.5)
-            if (gridWidth_ < rect.Width() * 1.5)
+            if (gridWidth_ < rect.Width()/* * 1.5*/)
             {
                 //DebugLog.Warning("!!! Entity " + entity.InstId() + " width " + aabbComp.CompDef.Width + " too large for add into grid");
                 DebugLog.Warning("!!! Entity " + entity.InstId() + " width " + rect.Width() + " too large for add into grid");
                 return false;
             }
             //if (gridHeight_ < aabbComp.CompDef.Height * 1.5)
-            if (gridHeight_ < rect.Height() * 1.5)
+            if (gridHeight_ < rect.Height()/* * 1.5*/)
             {
                 //DebugLog.Warning("!!! Entity " + entity.InstId() + " height " + aabbComp.CompDef.Height + " too large for add into grid");
                 DebugLog.Warning("!!! Entity " + entity.InstId() + " height " + rect.Height() + " too large for add into grid");
@@ -637,7 +637,7 @@ namespace Logic.System
             var dx = (long)MathUtil.Cosine(dirAngle) * maxDistance / MathUtil.Denominator();
             var dy = (long)MathUtil.Sine(dirAngle) * maxDistance / MathUtil.Denominator();
             var ex = start.X() + (int)dx; var ey = start.Y() + (int)dy;
-            LimitPositionInBounds(start.X(), start.Y(), ref ex, ref ey);
+            //LimitPositionInBounds(start.X(), start.Y(), ref ex, ref ey);
 
             var end = new Position(ex, ey);
             return GetSegmentEntitiesIntersection(start, end, filterFunc, ref rayHitInfoCache);
@@ -738,16 +738,16 @@ namespace Logic.System
             return GetPositionLineCol(pos.X(), pos.Y(), out line, out col);
         }
 
-        bool GetPositionLineCol(int x, int y, out short line, out short col)
+        bool GetPositionLineCol(int x, int y, out short line, out short col, bool checkValid = true)
         {
             line = (short)((y - mapBottom_) / gridHeight_);
             col = (short)((x - mapLeft_) / gridWidth_);
-            if (line < 0 || line >= gridLineNum_)
+            if (checkValid && (line < 0 || line >= gridLineNum_))
             {
                 DebugLog.Error("invalid line " + line + " with position Y: " + y);
                 return false;
             }
-            if (col < 0 || col >= gridColNum_)
+            if (checkValid && (col < 0 || col >= gridColNum_))
             {
                 DebugLog.Error("invalid column " + col + " with position X: " + x);
                 return false;
@@ -929,7 +929,7 @@ namespace Logic.System
             while ((di > 0 && i <= ei) || (di < 0 && i >= ei) || (dj > 0 && j <= ej) || (dj < 0 && j >= ej)) {
                 if (!flag) // x轴方向
                 {
-                    if (!GetPositionLineCol(i, j, out var line, out var col))
+                    if (!GetPositionLineCol(i, j, out var line, out var col, false))
                     {
                         throw new Exception("Invalid position: " + i + ", " + j);
                     }
@@ -942,7 +942,7 @@ namespace Logic.System
                 }
                 else // y轴方向 
                 {
-                    if (!GetPositionLineCol(j, i, out var line, out var col))
+                    if (!GetPositionLineCol(j, i, out var line, out var col, false))
                     {
                         throw new Exception("Invalid position: " + i + ", " + j);
                     }

@@ -164,7 +164,7 @@ namespace Logic.System
             {
               var ray = new Ray(worldPos, shootingDir, projCompDef.Range);
               ColliderComponent colliderComp = null; // 被碰撞实体碰撞组件
-              Position pos = projectileTransformComp.Pos;
+              Position pos = worldPos; //projectileTransformComp.Pos;
               bool isCollision = false;
               rayHitInfoCache_.Clear();
 
@@ -175,7 +175,7 @@ namespace Logic.System
               }, ref rayHitInfoCache_))
               {
                 (colliderComp, pos, isCollision) = GetRayCollisionsResult(entity, rayHitInfoCache_);
-                if (!isCollision) pos = projectileTransformComp.Pos;
+                if (!isCollision) pos = worldPos; //projectileTransformComp.Pos;
               }
               if (!isCollision)
               {
@@ -221,18 +221,8 @@ namespace Logic.System
         {
           continue;
         }
-
         colliderComp = hitInfo.entity.GetComponent<ColliderComponent>();
-        if (relation == CampRelation.Hostile)
-        {
-          if (colliderComp.IsRigidBody)
-          {
-            pos = hitInfo.HitPoint;
-            isCollision = true;
-            break;
-          }
-        }
-        else
+        if (relation == CampRelation.Hostile || relation == CampRelation.Neutral)
         {
           if (colliderComp.IsRigidBody)
           {

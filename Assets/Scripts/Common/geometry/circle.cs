@@ -5,6 +5,12 @@ namespace Common.Geometry
     Position center_;
     int radius_;
 
+    public Circle(int radius)
+    {
+      center_ = new();
+      radius_ = radius;
+    }
+
     public Circle(Position center, int radius)
     {
       center_ = center;

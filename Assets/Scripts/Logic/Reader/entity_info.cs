@@ -19,8 +19,6 @@ namespace Logic.Reader
             {"tag_comp", ParseTagCompDef}, // Tag组件
             {"shooting_comp", ParseShootingCompDef}, // 射击组件
             {"lifetime_comp", ParseLifeTimeCompDef}, // 生命时间组件
-            {"fence_comp", ParseFenceCompDef}, // fence组件
-            {"invisible_comp", ParseInvisibleCompDef}, // invisible组件
             {"projectile_comp", ParseProjectileCompDef}, //projectile组件
             {"search_comp", ParseSearchCompDef}, // search组件
             {"behaviour_comp", ParseBehaviourCompDef}, // behaviour组件
@@ -227,26 +225,6 @@ namespace Logic.Reader
       def.CompDefList.Add(compDef);
       return true;
     }*/
-
-    private static bool ParseFenceCompDef(YamlNode value, EntityDef def)
-    {
-      YamlMappingNode mappingNode = (YamlMappingNode)value;
-      FenceCompDef compDef = new();
-      ComponentInfoReader.ParseFence(mappingNode, compDef);
-      def.CompDefList ??= new();
-      def.CompDefList.Add(compDef);
-      return true;
-    }
-
-    private static bool ParseInvisibleCompDef(YamlNode value, EntityDef def)
-    {
-      YamlMappingNode mappingNode = (YamlMappingNode)value;
-      InvisibleCompDef compDef = new();
-      ComponentInfoReader.ParseInvisible(mappingNode, compDef);
-      def.CompDefList ??= new();
-      def.CompDefList.Add(compDef);
-      return true;
-    }
 
     private static bool ParseProjectileCompDef(YamlNode value, EntityDef def)
     {

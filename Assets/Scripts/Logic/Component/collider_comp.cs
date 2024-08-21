@@ -3,12 +3,13 @@ using Common;
 using Common.Geometry;
 using Logic.Interface;
 using Logic.Base;
+using System.Runtime.InteropServices;
 
 namespace Logic.Component
 {
   public class ColliderCompDef : CompDef
   {
-    public BoundingShape Shape;
+    public Shape Shape;
     public bool IsRigidBody;
 
     public override IComponent Create(IComponentContainer container)
@@ -27,7 +28,7 @@ namespace Logic.Component
     ColliderCompDef compDef_;
     Rect aabb_;
     TransformComponent transformComp_;
-    BoundingShape boundingShape_;
+    Shape shape_;
     bool isRigidBody_;
 
     event Action<CollisionInfo> CollisionEvent_;
@@ -42,7 +43,7 @@ namespace Logic.Component
       compDef_ = (ColliderCompDef)compDef;
       aabb_ = new Rect();
       transformComp_ = container_.GetComponent<TransformComponent>();
-      boundingShape_ = compDef_.Shape;
+      shape_ = compDef_.Shape;
       isRigidBody_ = compDef_.IsRigidBody;
     }
 
@@ -89,7 +90,7 @@ namespace Logic.Component
     public bool GetRect(out Rect rect)
     {
       var shapeType = compDef_.Shape.GetShapeType();
-      if (shapeType == BoundingShapeType.Rect)
+      if (shapeType == ShapeType.Rect)
       {
         if (!compDef_.Shape.GetRect(out aabb_))
         {
@@ -107,7 +108,7 @@ namespace Logic.Component
     public bool GetCircle(out Circle circle)
     {
       var shapeType = compDef_.Shape.GetShapeType();
-      if (shapeType == BoundingShapeType.Circle)
+      if (shapeType == ShapeType.Circle)
       {
         if (!compDef_.Shape.GetCircle(out circle))
         {
@@ -116,6 +117,21 @@ namespace Logic.Component
         return true;
       }
       circle = new();
+      return false;
+    }
+
+    public bool GetSegment(out Segment segment)
+    {
+      var shapeType = compDef_.Shape.GetShapeType();
+      if (shapeType == ShapeType.Segment)
+      {
+        if (!compDef_.Shape.GetSegment(out segment))
+        {
+          return false;
+        }
+        return true;
+      }
+      segment = new();
       return false;
     }
 
@@ -143,7 +159,7 @@ namespace Logic.Component
       var inside = false;
       var shape = compDef_.Shape;
       var shapeType = shape.GetShapeType();
-      if (shapeType == BoundingShapeType.Rect)
+      if (shapeType == ShapeType.Rect)
       {
         shape.GetRect(out var r);
         r.SetCenter(pos);
@@ -152,7 +168,7 @@ namespace Logic.Component
           inside = true;
         }
       }
-      else if (shapeType == BoundingShapeType.Circle)
+      else if (shapeType == ShapeType.Circle)
       {
         shape.GetCircle(out var c);
         c.MoveTo(pos);
@@ -179,11 +195,11 @@ namespace Logic.Component
       var shapeType = shape.GetShapeType();
       var shape2 = colliderComp.compDef_.Shape;
       var shapeType2 = shape2.GetShapeType();
-      if (shapeType == BoundingShapeType.Rect)
+      if (shapeType == ShapeType.Rect)
       {
         shape.GetRect(out var rect);
         rect.SetCenter(pos);
-        if (shapeType2 == BoundingShapeType.Rect)
+        if (shapeType2 == ShapeType.Rect)
         {
           shape2.GetRect(out var rect2);
           rect2.SetCenter(colliderComp.transformComp_.Pos);
@@ -192,7 +208,7 @@ namespace Logic.Component
             isIntersect = true;
           }
         }
-        else if (shapeType2 == BoundingShapeType.Circle)
+        else if (shapeType2 == ShapeType.Circle)
         {
           shape2.GetCircle(out var circle2);
           circle2.MoveTo(colliderComp.transformComp_.Pos);
@@ -202,11 +218,11 @@ namespace Logic.Component
           }
         }
       }
-      else if (shapeType == BoundingShapeType.Circle)
+      else if (shapeType == ShapeType.Circle)
       {
         shape.GetCircle(out var circle);
         circle.MoveTo(pos);
-        if (shapeType2 == BoundingShapeType.Circle)
+        if (shapeType2 == ShapeType.Circle)
         {
           shape2.GetCircle(out var circle2);
           circle2.MoveTo(colliderComp.transformComp_.Pos);
@@ -215,7 +231,7 @@ namespace Logic.Component
             isIntersect = true;
           }
         }
-        else if (shapeType2 == BoundingShapeType.Rect)
+        else if (shapeType2 == ShapeType.Rect)
         {
           shape2.GetRect(out var rect2);
           rect2.SetCenter(colliderComp.transformComp_.Pos);
@@ -233,10 +249,10 @@ namespace Logic.Component
       get => compDef_;
     }
 
-    public BoundingShape Shape
+    public Shape Shape
     {
-      get => boundingShape_;
-      set => boundingShape_ = value;
+      get => shape_;
+      set => shape_ = value;
     }
 
     public bool IsRigidBody

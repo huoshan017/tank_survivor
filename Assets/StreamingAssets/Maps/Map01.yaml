@@ -2,10 +2,28 @@ id: 1
 name: "map01"
 bounds: { x: -80000, y: -64000, w: 160000, h: 128000 }
 grid: { width: 16000, height: 16000 }
+players_info:
+  - no: 0
+    camp_data: { type: 2 }
+    transform_data:
+      pos: { x: -24700, y: -800 }
+      rotation: 120
+  - no: 1
+    camp_data: { type: 2 }
+    transform_data:
+      pos: { x: -700, y: -900 }
+      rotation: 0
+  - no: 2
+    camp_data: { type: 2 }
+    transform_data:
+      pos: { x: -600, y: -600 }
+      rotation: 10
+  - no: 3
+    camp_data: { type: 2 }
+    transform_data:
+      pos: { x: -600, y: -700 }
+      rotation: 20
 entities:
-  #- id: 13
-  #  camp_data: { type: 1 }
-  #  transform_data: { pos: { x: 2000, y: -4000} }
   - id: 100101
     camp_data: { type: 1 }
     transform_data: { pos: { x: -3000, y: 9000}, rotation: 100 }
@@ -32,38 +50,119 @@ entities:
   - id: 100130
     camp_data: { type: 1 }
     transform_data: { pos: { x: -8000, y: 6000} }
+  - id: 1001400
+    camp_data: { type: 1 }
+    transform_data: { pos: { x: -20000, y: 0 } }
 fences:
-  - id: 5
+  # 围栏下边
+  - id: 5 # 0
     camp_data: { type: 0 }
-    transform_data: { pos: { x: -81000, y: 0 } }
-    collider_data: { shape: "rect", width: 2000, height: 128000, is_rigidbody: true }
-  - id: 5
+    transform_data: { pos: { x: -72000, y: -63900 } }
+  - id: 5 # 1
     camp_data: { type: 0 }
-    transform_data: { pos: { x: 0, y: -65000 } }
-    collider_data: { shape: "rect", width: 160000, height: 2000, is_rigidbody: true }
-  - id: 5
+    transform_data: { pos: { x: -56000, y: -63900 } }
+  - id: 5 # 2
     camp_data: { type: 0 }
-    transform_data: { pos: { x: 81000, y: 0} }
-    collider_data: { shape: "rect", width: 2000, height: 128000, is_rigidbody: true }
-  - id: 5
+    transform_data: { pos: { x: -40000, y: -63900 } }
+  - id: 5 # 3
     camp_data: { type: 0 }
-    transform_data: { pos: { x: 0, y: 65000 } }
-    collider_data: { shape: "rect", width: 160000, height: 2000, is_rigidbody: true }
-
-players_info:
-  - no: 0
-    transform_data:
-      pos: { x: -24700, y: -800 }
-      rotation: 120
-  - no: 1
-    transform_data:
-      pos: { x: -700, y: -900 }
-      rotation: 0
-  - no: 2
-    transform_data:
-      pos: { x: -600, y: -600 }
-      rotation: 10
-  - no: 3
-    transform_data:
-      pos: { x: -600, y: -700 }
-      rotation: 20
+    transform_data: { pos: { x: -24000, y: -63900 } }
+  - id: 5 # 4
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: -8000, y: -63900 } }
+  - id: 5 # 5
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 8000, y: -63900 } }
+  - id: 5 # 6
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 24000, y: -63900 } }
+  - id: 5 # 7
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 40000, y: -63900 } }
+  - id: 5 # 8
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 56000, y: -63900 } }
+  - id: 5 # 9
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 72000, y: -63900 } }
+  # 围栏上边
+  - id: 5 # 10
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: -72000, y: 63900} }
+  - id: 5 # 11
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: -56000, y: 63900 } }
+  - id: 5 # 12
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: -40000, y: 63900 } }
+  - id: 5 # 13
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: -24000, y: 63900 } }
+  - id: 5 # 14
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: -8000, y: 63900 } }
+  - id: 5 # 15
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 8000, y: 63900 } }
+  - id: 5 # 16
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 24000, y: 63900 } }
+  - id: 5 # 17
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 40000, y: 63900 } }
+  - id: 5 # 18
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 56000, y: 63900 } }
+  - id: 5 # 19
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 72000, y: 63900 } }
+  # 围栏左边
+  - id: 6 # 20
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: -79900, y: -56000 } }
+  - id: 6 # 21
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: -79900, y: -40000 } }
+  - id: 6 # 22
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: -79900, y: -24000} }
+  - id: 6 # 23
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: -79900, y: -8000} }
+  - id: 6 # 24
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: -79900, y: 8000 } }
+  - id: 6 # 25
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: -79900, y: 24000} }
+  - id: 6 # 26
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: -79900, y: 40000} }
+  - id: 6 # 27
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: -79900, y: 56000 } }
+  # 围栏右边
+  - id: 6 # 28
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 79900, y: -56000 } }
+  - id: 6 # 29
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 79900, y: -40000 } }
+  - id: 6 # 30
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 79900, y: -24000} }
+  - id: 6 # 31
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 79900, y: -8000 } }
+  - id: 6 # 32
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 79900, y: 8000 } }
+  - id: 6 # 33
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 79900, y: 24000 } }
+  - id: 6 # 34
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 79900, y: 40000} }
+  - id: 6 # 35
+    camp_data: { type: 0 }
+    transform_data: { pos: { x: 79900, y: 56000 } }

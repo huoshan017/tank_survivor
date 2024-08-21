@@ -101,12 +101,6 @@ namespace Logic.System
           return true;
         }
 
-        // 先把围栏检测一下，有碰撞则加入处理列表
-        collisionSystem_.ForeachFence((IEntity entity2) =>
-        {
-          filterFunc(entity2);
-        });
-
         // 找到地图中下一帧会碰撞的实体，并加入列表
         gridSystem_.ForeachFilteredEntityAround(entityInstId, filterFunc, null);
 

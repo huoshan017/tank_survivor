@@ -6,7 +6,7 @@ entities_def:
       movement_comp: { speed: 35000 }
       lifetime_comp: { time_seconds: 10, range: 10000 }
       collider_comp: { shape: "rect", width: 250, height: 250 }
-      projectile_comp: { type: "bullet", range: 50000, damage: 100, damage_type: 1 }
+      projectile_comp: { type: "bullet", range: 20000, damage: 100, damage_type: 1 }
 
   - id: 2002
     name: "medium_shell"
@@ -15,7 +15,7 @@ entities_def:
       movement_comp: { speed: 30950 }
       lifetime_comp: { time_seconds: 10 }
       collider_comp: { shape: "rect", width: 400, height: 400 }
-      projectile_comp: { type: "bullet", range: 50000, damage: 200, damage_type: 3, damage_radius: 800 }
+      projectile_comp: { type: "bullet", range: 20000, damage: 200, damage_type: 3, damage_radius: 800 }
 
   - id: 2003
     name: "heavy_shell"
@@ -24,7 +24,7 @@ entities_def:
       movement_comp: { speed: 25850 }
       lifetime_comp: { time_seconds: 10 }
       collider_comp: { shape: "rect", width: 450, height: 450 }
-      projectile_comp: { type: "bullet", range: 50000, damage: 300, damage_type: 3, damage_radius: 1000 }
+      projectile_comp: { type: "bullet", range: 20000, damage: 300, damage_type: 3, damage_radius: 1000 }
 
   - id: 3000
     name: "bomb"
@@ -33,7 +33,7 @@ entities_def:
       movement_comp: { speed: 1600 }
       lifetime_comp: { time_seconds: 10 }
       collider_comp: { shape: "rect", width: 450, height: 450 }
-      projectile_comp: { type: "bomb", range: 50000, damage: 500, damage_type: 2, damage_radius: 1000 }
+      projectile_comp: { type: "bomb", range: 20000, damage: 500, damage_type: 2, damage_radius: 1000 }
   
   - id: 4000
     name: "plasma"
@@ -41,7 +41,7 @@ entities_def:
       transform_comp: { orientation_rotation_diff: 90 }
       movement_comp: { speed: 37600 }
       collider_comp: { shape: "rect", width: 250, height: 250 } 
-      projectile_comp: { type: "plasma", range: 50000, damage: 300, damage_type: 16 }
+      projectile_comp: { type: "plasma", range: 30000, damage: 300, damage_type: 16 }
 
   - id: 5000
     name: "rocket"
@@ -50,7 +50,7 @@ entities_def:
       movement_comp: { speed: 26780 }
       lifetime_comp: { time_seconds: 10 }
       collider_comp: { shape: "rect", width: 350, height: 350 }
-      projectile_comp: { type: "bullet", range: 50000, damage: 800, damage_type: 3, damage_range: 2000 }
+      projectile_comp: { type: "bullet", range: 40000, damage: 800, damage_type: 3, damage_range: 2000 }
 
   #- id: 6000
     #name: "round_mine"

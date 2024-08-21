@@ -63,34 +63,38 @@ namespace Logic.System
           Position childPosition;
           Angle targetDirAngle;
           var targetEntity = GetEntity(searchComp.TargetEntityInstId);
-          var currTag = behaviourComp.CurrentChildTag;
-          behaviourComp.Move2NextChildTag();
-          (shootingComp, childPosition, targetDirAngle, aimDone) = DoAim(entity, currTag, targetEntity);
-          if (!aimDone || shootingComp == null) return;
-          
-          var targetTransformComp = targetEntity.GetComponent<TransformComponent>();
-          var range = shootingComp.CompDef.Range;
-          // 不在射程之内就接近
-          if (Position.DistanceSquare(childPosition, targetTransformComp.Pos) > (ulong)range * (ulong)range)
+          //var currTag = behaviourComp.CurrentChildTag;
+          //behaviourComp.Move2NextChildTag();
+          var childCount = entity.ChildCount();
+          for (int i = 0; i < childCount; i++)
           {
-            if (behaviourComp.IsStateAttack())
+            (shootingComp, childPosition, targetDirAngle, aimDone) = DoAim(entity, i, targetEntity);
+            if (!aimDone || shootingComp == null) return;
+
+            var targetTransformComp = targetEntity.GetComponent<TransformComponent>();
+            var range = shootingComp.CompDef.Range;
+            // 不在射程之内就接近
+            if (Position.DistanceSquare(childPosition, targetTransformComp.Pos) > (ulong)range * (ulong)range)
             {
-              behaviourComp.EnterStateAlert();
+              if (behaviourComp.IsStateAttack())
+              {
+                behaviourComp.EnterStateAlert();
+              }
+              shootingSystem_.CheckAndStop(shootingComp);
+              movementComp?.Move(targetDirAngle);
             }
-            shootingSystem_.CheckAndStop(shootingComp);
-            movementComp?.Move(targetDirAngle);
-          }
-          else
-          {
-            if (behaviourComp.IsStateAlert())
+            else
             {
-              behaviourComp.EnterStateAttack();
+              if (behaviourComp.IsStateAlert())
+              {
+                behaviourComp.EnterStateAttack();
+              }
+              if (aimDone)
+              {
+                shootingSystem_.CheckAndStart(shootingComp);
+              }
+              movementComp?.Stop();
             }
-            if (aimDone)
-            {
-              shootingSystem_.CheckAndStart(shootingComp);
-            }
-            movementComp?.Stop();
           }
         }
         else if (behaviourComp.IsStateReturn())
@@ -100,10 +104,10 @@ namespace Logic.System
       });
     }
 
-    (ShootingComponent, Position, Angle, bool) DoAim(IEntity entity, string childTag, IEntity targetEntity)
+    (ShootingComponent, Position, Angle, bool) DoAim(IEntity entity, int childIndex, IEntity targetEntity)
     {
       // 子实体
-      var child = GetChildWithTag(entity, childTag);
+      var child = entity.GetChild(childIndex); //GetChildWithTag(entity, childTag);
       if (child == null)
       {
         return (null, new Position(), new Angle(), false);
@@ -149,7 +153,7 @@ namespace Logic.System
       relation = CampRelation.Neutral;
       if (trackingEntity == null)
       {
-        uint currMs = context_.FrameMs() * (uint)context_.FrameNum();
+        uint currMs = context_.FrameMs() * context_.FrameNum();
         if (!searchComp.CanSearch(currMs))
         {
           relation = CampRelation.Neutral;

@@ -69,3 +69,24 @@ entities_def:
     components:
       search_comp: { radius: 10000, target_relation: 2, intervals: 1000 }
       behaviour_comp: {}
+
+  - id: 1001400
+    name: "bot_platform_a"
+    inherit: 1400
+    components:
+      search_comp: { radius: 20000, target_relation: 2, intervals: 1000}
+      behaviour_comp: {}
+
+  - id: 1001401
+    name: "bot_platform_b"
+    inherit: 1401
+    components:
+      search_comp: { radius: 20000, target_relation: 2, internals: 1000 }
+      behaviour_comp: {}
+
+  - id: 1001402
+    name: "bot_platform_c"
+    inherit: 1402
+    components:
+      search_comp: { radius: 20000, target_relation: 2, internals: 1000 }
+      behaviour_comp: {}

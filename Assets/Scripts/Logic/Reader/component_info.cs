@@ -274,23 +274,6 @@ namespace Logic.Reader
       }
     }*/
 
-    public static void ParseFence(YamlMappingNode fenceNode, FenceCompDef compDef)
-    {
-
-    }
-
-    public static void ParseInvisible(YamlMappingNode invisibleNode, InvisibleCompDef compDef)
-    {
-      foreach (var n in invisibleNode)
-      {
-        string key = ((YamlScalarNode)n.Key).Value;
-        if (key == "value")
-        {
-          compDef.Value = bool.Parse(n.Value.ToString());
-        }
-      }
-    }
-
     public static ProjectileCompDef ParseProjectile(YamlMappingNode projectileNode)
     {
       var typeKey = new YamlScalarNode("type");
@@ -408,6 +391,8 @@ namespace Logic.Reader
       string shapeValue = "";
       int width = 0, height = 0;
       int radius = 0;
+      int length = 0;
+      int rotation = 0;
       bool isRigidbody = false;
       foreach (var n in colliderNode)
       {
@@ -428,6 +413,14 @@ namespace Logic.Reader
         {
           radius = int.Parse(n.Value.ToString());
         }
+        else if (key == "length")
+        {
+          length = int.Parse(n.Value.ToString());
+        }
+        else if (key == "rotation")
+        {
+          rotation = int.Parse(n.Value.ToString());
+        }
         else if (key == "is_rigidbody")
         {
           isRigidbody = bool.Parse(n.Value.ToString());
@@ -437,16 +430,23 @@ namespace Logic.Reader
       if (shapeValue == "rect")
       {
         if (compDef != null)
-          compDef.Shape = new BoundingShape(BoundingShapeType.Rect, width, height);
+          compDef.Shape = new Shape(ShapeType.Rect, width, height);
         if (comp != null)
-          comp.Shape  = new BoundingShape(BoundingShapeType.Rect, width, height);
+          comp.Shape  = new Shape(ShapeType.Rect, width, height);
       }
       else if (shapeValue == "circle")
       {
         if (compDef != null)
-          compDef.Shape = new BoundingShape(BoundingShapeType.Circle, radius);
+          compDef.Shape = new Shape(ShapeType.Circle, radius);
         if (comp != null)
-          comp.Shape = new BoundingShape(BoundingShapeType.Circle, radius);
+          comp.Shape = new Shape(ShapeType.Circle, radius);
+      }
+      else if (shapeValue == "segment" || shapeValue == "line")
+      {
+        if (compDef != null)
+          compDef.Shape = new Shape(ShapeType.Segment, length, rotation);
+        if (comp != null)
+          comp.Shape = new Shape(ShapeType.Segment, length, rotation);
       }
       if (compDef != null)
         compDef.IsRigidBody = isRigidbody;

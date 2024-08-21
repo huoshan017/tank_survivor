@@ -261,6 +261,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7245544966858631634}
+  - component: {fileID: 1614944262928516110}
   m_Layer: 0
   m_Name: PlatformB
   m_TagString: Untagged
@@ -286,6 +287,18 @@ Transform:
   - {fileID: 2459397580710070042}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1614944262928516110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5668027802974958132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7285cc684813a14a8ad3e443e045402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5713653521336147072
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,6 +393,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2459397580710070042}
   - component: {fileID: 5097345143528344541}
+  - component: {fileID: 6380005080742675940}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Untagged
@@ -456,3 +470,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6380005080742675940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5721771448391667740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6366727b2844d34291aafeaabd5bd93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

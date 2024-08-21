@@ -6,24 +6,46 @@ using UnityEngine;
 
 public class PlayableEntity : MonoBehaviour
 {
-  protected IPlayableContext playableContext_;
-  protected GameObject hpBarObj_;
-  protected AssetConfig assetConfig_;
-
   // Start is called before the first frame update
   protected void Start()
   {
     if (transformComp_ != null)
     {
       transform.localEulerAngles = new Vector3(0, 0, RotateDegree());
-      lastLogicPos_ = transformComp_.Pos;
+      UpdatePos(true);
       transform.localPosition = new Vector3(lastLogicPos_.X(), lastLogicPos_.Y(), 0) / GlobalConstant.LogicAndUnityRatio;
     }
   }
 
   protected void Update()
   {
+    transform.localEulerAngles = new Vector3(0, 0, RotateDegree());
     UpdateHpBar(false);
+    // TODO 画出包围盒，用于调试
+    var colliderComp = entity_.GetComponent<ColliderComponent>();
+    if (colliderComp != null && colliderComp.GetAABB(out var r))
+    {
+      var lb = r.LeftBottom();
+      var rb = r.RightBottom();
+      var rt = r.RightTop();
+      var lt = r.LeftTop();
+      var lbv2 = new Vector2(lb.X(), lb.Y()) / GlobalConstant.LogicAndUnityRatio;
+      var rbv2 = new Vector2(rb.X(), rb.Y()) / GlobalConstant.LogicAndUnityRatio;
+      var rtv2 = new Vector2(rt.X(), rt.Y()) / GlobalConstant.LogicAndUnityRatio;
+      var ltv2 = new Vector2(lt.X(), lt.Y()) / GlobalConstant.LogicAndUnityRatio;
+      Debug.DrawLine(lbv2, rbv2, Color.red);
+      Debug.DrawLine(rbv2, rtv2, Color.red);
+      Debug.DrawLine(rtv2, ltv2, Color.red);
+      Debug.DrawLine(ltv2, lbv2, Color.red);
+    }
+  }
+
+  protected void OnDestroy()
+  {
+    if (hpBarObj_ != null)
+    {
+      playableContext_.RecycleUiGameObject(hpBarObj_);
+    }
   }
 
   public virtual void Attach(Entity entity, AssetConfig assetConfig)
@@ -149,6 +171,22 @@ public class PlayableEntity : MonoBehaviour
 
   }
 
+  // 更新位置
+  protected void UpdatePos(bool first)
+  {
+    if (first)
+    {
+      currLogicPos_ = transformComp_.Pos;
+      lastLogicPos_ = currLogicPos_;
+    }
+    else
+    {
+      lastLogicPos_ = currLogicPos_;
+      currLogicPos_ = transformComp_.Pos;
+    }
+  }
+
+  // 旋转角度
   protected float RotateDegree()
   {
     var rotateAngle = transformComp_.Rotation; // 朝向
@@ -164,7 +202,10 @@ public class PlayableEntity : MonoBehaviour
     if (hpBarObj_ != null)
     {
       var hpbarOffset = assetConfig_.HpBarOffset;
-      hpBarObj_.transform.position = new Vector3(transformComp_.Pos.X()+hpbarOffset.X(), transformComp_.Pos.Y()+hpbarOffset.Y(), HPBar.ZHeight)/GlobalConstant.LogicAndUnityRatio;
+      hpBarObj_.transform.localPosition = new Vector3(
+        transform.localPosition.x+hpbarOffset.X()/GlobalConstant.LogicAndUnityRatio,
+        transform.localPosition.y+hpbarOffset.Y()/GlobalConstant.LogicAndUnityRatio,
+        HPBar.ZHeight/GlobalConstant.LogicAndUnityRatio);
       if (hpBarObj_.TryGetComponent<HPBar>(out var hpBar))
       {
         hpBar.UpdateHealth((float)charComp_.Hp/charComp_.MaxHp);
@@ -172,11 +213,15 @@ public class PlayableEntity : MonoBehaviour
     }
   }
 
+  protected IPlayableContext playableContext_;
+  protected GameObject hpBarObj_;
+  protected AssetConfig assetConfig_;
+
   protected Entity entity_;
   protected TransformComponent transformComp_;
   protected ColliderComponent colliderComp_;
   protected CharacterComponent charComp_;
-  protected Position lastLogicPos_;
+  protected Position lastLogicPos_, currLogicPos_;
   protected Angle lastRotation_;
   protected bool paused_;
 }

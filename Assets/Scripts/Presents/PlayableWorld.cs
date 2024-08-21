@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Common;
 using Logic;
-using Logic.Component;
 using Logic.Entity;
 using Utils;
 using UnityEngine;
@@ -176,10 +175,6 @@ public class PlayableWorld : MonoBehaviour, IPlayableContext
   {
     var entity = world_.GetEntity(entityInstId);
     if (entity == null) return false;
-    if (entity.HasComponent<InvisibleComponent>())
-    {
-      return false;
-    }
     if (InstantiateEntityGameObject((Entity)entity) == null)
     {
       return false;
@@ -274,7 +269,7 @@ public class PlayableWorld : MonoBehaviour, IPlayableContext
     return parentNode;
   }
 
-  World world_;
+  internal World world_;
   Dictionary<uint, GameObject> playableGameObjectDict_;
   GameObject root_;
   Dictionary<string, GameObject> nodeDict_;
