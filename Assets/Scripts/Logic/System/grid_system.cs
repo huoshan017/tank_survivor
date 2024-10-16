@@ -114,7 +114,7 @@ namespace Logic.System
         public override void DoUpdate(uint frameMs)
         {
             entityInstId2EntityList_.Foreach((uint entityInstId, GridEntityInfo entityInfo)=>{
-                var entity = GetEntity(entityInstId);
+                var entity = context_.GetEntity(entityInstId);
                 if (entity == null) return;
                 var transformComp = entity.GetComponent<TransformComponent>();
                 GetEntityLineCol(transformComp, out var line, out var col);
@@ -139,7 +139,7 @@ namespace Logic.System
                 return false;
             }
 
-            var entity = GetEntity(entityInstId);
+            var entity = context_.GetEntity(entityInstId);
             if (entity == null) return false;
             //var aabbComp = entity.GetComponent<AABBComponent>();
             //if (aabbComp == null) return false;
@@ -180,7 +180,7 @@ namespace Logic.System
 
         public override bool RemoveEntity(uint entityInstId, int entityId)
         {
-            var entity = GetEntity(entityInstId);
+            var entity = context_.GetEntity(entityInstId);
             if (entity == null) return false;
             GridEntityInfo info = new();
             if (!entityInstId2EntityList_.Get(entityInstId, ref info)) return false;
@@ -217,7 +217,7 @@ namespace Logic.System
                     if (elist == null) continue;
                     foreach (var e in elist)
                     {
-                        var entity = GetEntity(e);
+                        var entity = context_.GetEntity(e);
                         if (entity == null) continue;
                         if (e == entityInstId) continue;
                         if (filterHandle == null || (filterHandle != null && filterHandle(entity)))
@@ -246,7 +246,7 @@ namespace Logic.System
                     if (elist == null) continue;
                     foreach (var e in elist)
                     {
-                        var entity = GetEntity(e);
+                        var entity = context_.GetEntity(e);
                         if (entity == null) continue;
                         // TODO 精确的做法是用矩形是否相交来判断是否在范围内
                         var transformComp = entity.GetComponent<TransformComponent>();
@@ -292,7 +292,7 @@ namespace Logic.System
                     if (elist == null) continue;
                     foreach (var e in elist)
                     {
-                        var entity = GetEntity(e);
+                        var entity = context_.GetEntity(e);
                         if (entity == null) continue;
                         // TODO 精确的做法是用矩形是否相交来判断是否在范围内
                         //var aabbComp = entity.GetComponent<AABBComponent>();
@@ -333,7 +333,7 @@ namespace Logic.System
                     if (elist == null) continue;
                     foreach (var eid in elist)
                     {
-                        var tempEntity = GetEntity(eid);
+                        var tempEntity = context_.GetEntity(eid);
                         if (tempEntity == null) continue;
                         // TODO 精确的做法是用矩形是否相交来判断是否在范围内
                         //var (transformComp, aabbComp) = tempEntity.GetComponents<TransformComponent, AABBComponent>();
@@ -596,7 +596,7 @@ namespace Logic.System
                     if (elist == null) continue;
                     foreach (var e in elist)
                     {
-                        var entity = GetEntity(e);
+                        var entity = context_.GetEntity(e);
                         if (entity == null) continue;
                         // TODO 精确的做法是用矩形是否相交来判断是否在范围内
                         //var aabbComp = entity.GetComponent<AABBComponent>();
@@ -926,7 +926,8 @@ namespace Logic.System
 
             bool isIntersect = false;
             var (i, j) = (si, sj);
-            while ((di > 0 && i <= ei) || (di < 0 && i >= ei) || (dj > 0 && j <= ej) || (dj < 0 && j >= ej)) {
+            while ((di > 0 && i <= ei) || (di < 0 && i >= ei) || (dj > 0 && j <= ej) || (dj < 0 && j >= ej))
+            {
                 if (!flag) // x轴方向
                 {
                     if (!GetPositionLineCol(i, j, out var line, out var col, false))
@@ -946,8 +947,10 @@ namespace Logic.System
                     {
                         throw new Exception("Invalid position: " + i + ", " + j);
                     }
+
                     indexListCache_[1].line = line;
                     indexListCache_[1].column = col;
+
                     indexListCache_[0].line = line;
                     if (indexListCache_[1].column == 0)
                     {
@@ -957,6 +960,7 @@ namespace Logic.System
                     {
                         indexListCache_[0].column = (short)(col - 1);
                     }
+
                     indexListCache_[2].line = line;
                     if (indexListCache_[1].column == gridColNum_-1)
                     {
@@ -979,7 +983,7 @@ namespace Logic.System
                     if (gridEntityList == null) continue;
                     foreach (var eid in gridEntityList)
                     {
-                        var entity = GetEntity(eid);
+                        var entity = context_.GetEntity(eid);
                         if (entity == null) continue;
                         if (!filterFunc(entity)) continue;
                         var colliderComp = entity.GetComponent<ColliderComponent>();

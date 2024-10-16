@@ -37,7 +37,7 @@ namespace Logic.System
 
     public override void DoUpdate(uint frameMs)
     {
-      entityList_.Foreach((uint entityInstId, uint _) =>
+      ForeachEntity((uint entityInstId) =>
       {
         ProcessShooting(entityInstId);
       });
@@ -68,7 +68,7 @@ namespace Logic.System
 
     void ProcessShooting(uint shooterInstId)
     {
-      IEntity entity = GetEntity(shooterInstId);
+      IEntity entity = context_.GetEntity(shooterInstId);
       if (entity == null) return;
       var behaviourComp = entity.GetComponent<BehaviourComponent>();
       if (behaviourComp == null)
@@ -187,7 +187,6 @@ namespace Logic.System
               {
                 var behitEntity = (IEntity)colliderComp.Container();
                 var hitResult = weaponSystem_.ProjectileHit(projectileProjComp, behitEntity, pos);
-                var hitCollider = entity.GetComponent<ColliderComponent>();
                 if (hitResult == HitResult.Dead)
                 {
                   RecycleEntity(behitEntity);

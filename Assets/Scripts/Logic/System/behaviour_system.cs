@@ -31,9 +31,9 @@ namespace Logic.System
 
     public override void DoUpdate(uint frameMs)
     {
-      entityList_.Foreach((uint entityInstId, uint _) =>
+      ForeachEntity((uint entityInstId) =>
       {
-        var entity = GetEntity(entityInstId);
+        var entity = context_.GetEntity(entityInstId);
         if (entity == null) return;
         var (transformComp, movementComp, campComp, searchComp, projectileComp, shootingComp, behaviourComp)
             = entity.GetComponents<TransformComponent, MovementComponent, CampComponent, SearchComponent, ProjectileComponent, ShootingComponent, BehaviourComponent>();
@@ -62,7 +62,7 @@ namespace Logic.System
           bool aimDone;
           Position childPosition;
           Angle targetDirAngle;
-          var targetEntity = GetEntity(searchComp.TargetEntityInstId);
+          var targetEntity = context_.GetEntity(searchComp.TargetEntityInstId);
           //var currTag = behaviourComp.CurrentChildTag;
           //behaviourComp.Move2NextChildTag();
           var childCount = entity.ChildCount();
@@ -145,13 +145,13 @@ namespace Logic.System
     IEntity DoSearch(IEntity entity, out CampRelation relation)
     {
       var (transformComp, moveComp, campComp, searchComp) = entity.GetComponents<TransformComponent, MovementComponent, CampComponent, SearchComponent>();
-      IEntity trackingEntity = null;
+      IEntity targetEntity = null;
       if (searchComp.TargetEntityInstId != 0)
       {
-        trackingEntity = GetEntity(searchComp.TargetEntityInstId);
+        targetEntity = context_.GetEntity(searchComp.TargetEntityInstId);
       }
       relation = CampRelation.Neutral;
-      if (trackingEntity == null)
+      if (targetEntity == null)
       {
         uint currMs = context_.FrameMs() * context_.FrameNum();
         if (!searchComp.CanSearch(currMs))
@@ -161,7 +161,8 @@ namespace Logic.System
         }
         searchComp.LastSearchMs = currMs;
         var circle = new Circle(transformComp.Pos, searchComp.CompDef.Radius);
-        trackingEntity = gridSystem_.GetNearestEntityInCircle(circle, (IEntity entity2) =>
+        CampRelation campRelation = CampRelation.Neutral;
+        targetEntity = gridSystem_.GetNearestEntityInCircle(circle, (IEntity entity2) =>
         {
           // 默认不能是投射物
           if (entity2.HasComponent<ProjectileComponent>())
@@ -169,16 +170,17 @@ namespace Logic.System
             return false;
           }
           var campComp2 = entity2.GetComponent<CampComponent>();
-          var relation = ConfigManager.GetRelation(campComp.CampType, campComp2.CampType);
-          return relation == searchComp.CompDef.TargetRelation;
+          campRelation = ConfigManager.GetRelation(campComp.CampType, campComp2.CampType);
+          return campRelation == searchComp.CompDef.TargetRelation;
         });
       }
-      if (trackingEntity != null)
+      if (targetEntity != null)
       {
-        searchComp.TargetEntityInstId = trackingEntity.InstId();
-        relation = ConfigManager.GetRelation(campComp.CampType, trackingEntity.GetComponent<CampComponent>().CampType);
+        searchComp.TargetEntityInstId = targetEntity.InstId();
+        relation = ConfigManager.GetRelation(campComp.CampType, targetEntity.GetComponent<CampComponent>().CampType);
+        searchComp.TargetRelation = relation;
       }
-      return trackingEntity;
+      return targetEntity;
     }
   }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Common;
 using Logic.Base;
 using Logic.Interface;
@@ -14,7 +13,7 @@ namespace Logic.System
       context_ = context;
       entityList_ = new();
       inactiveList_ = new();
-      dummyIdList_ = new();
+      //dummyIdList_ = new();
     }
 
     public virtual void Init(CompTypeConfig config)
@@ -95,7 +94,11 @@ namespace Logic.System
 
     public virtual bool RemoveEntity(uint entityInstId, int entityId)
     {
-      return entityList_.Remove(entityInstId);
+      //return entityList_.Remove(entityInstId);
+      var entity = context_.GetEntity(entityInstId);
+      if (entity == null) return false;
+      RecycleEntity(entity);
+      return true;
     }
 
     public virtual void RecycleEntity(IEntity entity)
@@ -106,7 +109,7 @@ namespace Logic.System
       }
       DeactiveAttachedEntity(entity);
       entity.Deactive();
-      inactiveList_.Add(entity.InstId());
+      inactiveList_.Add(entity.InstId(), entity.InstId());
       context_.MarkRemoveEntity(entity.InstId());
       DebugLog.Info("!!! Deactive entity " + entity.InstId());
     }
@@ -140,38 +143,37 @@ namespace Logic.System
     public virtual void Update(uint frameMs)
     {
       DoUpdate(frameMs);
-      if (inactiveList_.Count > 0)
+      if (inactiveList_.Count() > 0)
       {
-        foreach (var eid in inactiveList_)
-        {
+        inactiveList_.Foreach((uint eid, uint _)=>{
           entityList_.Remove(eid);
-        }
+        });
         inactiveList_.Clear();
       }
-      if (dummyIdList_.Count > 0)
+      /*if (dummyIdList_.Count > 0)
       {
         foreach (var did in dummyIdList_)
         {
           entityList_.Remove(did);
         }
         dummyIdList_.Clear();
-      }
+      }*/
     }
 
-    public IEntity GetEntity(uint entityInstId)
-    {
-      var entity = context_.GetEntity(entityInstId);
-      // 不存在或者已经是非活动的
-      if (entity == null)
-      {
-        CleanDummyId(entityInstId);
-      }
-      return entity;
-    }
-
-    protected void CleanDummyId(uint entityInstId)
+    /*protected void CleanDummyId(uint entityInstId)
     {
       dummyIdList_.Add(entityInstId);
+    }*/
+
+    protected void ForeachEntity(Action<uint> action)
+    {
+      entityList_.Foreach((uint entityInstId, uint _)=>{
+        if (inactiveList_.Exists(entityInstId))
+        {
+          return;
+        }
+        action(entityInstId);
+      });
     }
 
     protected IEntity GetChildWithTag(IEntity entity, string tag)
@@ -213,8 +215,8 @@ namespace Logic.System
     protected IContext context_;
     protected CompTypeConfig config_;
     // 实体列表
-    protected MapListCombo<uint, uint> entityList_;
-    readonly List<uint> inactiveList_;
-    readonly List<uint> dummyIdList_;
+    readonly MapListCombo<uint, uint> entityList_;
+    readonly MapListCombo<uint, uint> inactiveList_;
+    //readonly List<uint> dummyIdList_;
   }
 }

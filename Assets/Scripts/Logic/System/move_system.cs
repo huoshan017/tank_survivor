@@ -38,7 +38,7 @@ namespace Logic.System
 
     public override void DoUpdate(uint frameMs)
     {
-      entityList_.Foreach(EachEntityAction);
+      ForeachEntity(EachEntityAction);
     }
 
     public override bool AddEntity(uint entityInstId)
@@ -53,9 +53,9 @@ namespace Logic.System
       return true;
     }
 
-    void EachEntityAction(uint entityInstId, uint _)
+    void EachEntityAction(uint entityInstId)
     {
-      var entity = GetEntity(entityInstId);
+      var entity = context_.GetEntity(entityInstId);
       if (entity == null) return;
 
       var (transformComp, movementComp, colliderComp)

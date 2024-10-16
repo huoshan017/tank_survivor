@@ -1,4 +1,3 @@
-using Logic.Base;
 using Logic.Component;
 using UnityEngine;
 
@@ -11,7 +10,6 @@ public class PlayableShell : PlayableProjectile
   protected override void OnHitHandle(HitInfo hitInfo)
   {
     var logicPos = transformComp_.Pos;
-    transform.position = new Vector2(logicPos.X(), logicPos.Y()) / GlobalConstant.LogicAndUnityRatio;
-    var hitPos = hitInfo.Pos;
+    transform.position = new Vector3(logicPos.X(), 0, logicPos.Y()) / GlobalConstant.LogicAndUnityRatio;
   }
 }

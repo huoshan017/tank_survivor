@@ -48,6 +48,7 @@ public class Main : MonoBehaviour
 
     var playerIdList = new ulong[] { GlobalConstant.DefaultSinglePlayerId };
     gameMgr_.Start(playerIdList, false);
+    Camera.main.transform.forward = new Vector3(0, -1, 0);
   }
 
   // Update is called once per frame
@@ -105,10 +106,10 @@ public class Main : MonoBehaviour
     var gameObj = playableWorld_.GetEntityGameObject(localPlayerEntityId_);
     if (gameObj != null)
     {
-      float originalZ = Camera.main.transform.position.z;
+      float originalY = Camera.main.transform.position.y;
       float x = gameObj.transform.position.x;
-      float y = gameObj.transform.position.y;
-      Camera.main.transform.position = new Vector3(x, y, originalZ);
+      float z = gameObj.transform.position.z;
+      Camera.main.transform.position = new Vector3(x, originalY, z);
       /*var currFrame = Time.frameCount;
       if (lastUpdateFrameNum_ == 0 || currFrame - lastUpdateFrameNum_ > updateCameraFrameNum)
       {

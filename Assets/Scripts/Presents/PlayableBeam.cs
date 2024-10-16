@@ -34,16 +34,16 @@ public class PlayableBeam : PlayableProjectile
   {
     CheckAndCreateRayRenderer();
     var logicPos = transformComp_.Pos;
-    transform.position = new Vector2(logicPos.X(), logicPos.Y()) / GlobalConstant.LogicAndUnityRatio;
+    transform.position = new Vector3(logicPos.X(), 0, logicPos.Y()) / GlobalConstant.LogicAndUnityRatio;
     var hitPos = shootingInfo.Pos;
     linePoints_[0] = transform.position;
-    linePoints_[1] = new Vector2(hitPos.X(), hitPos.Y()) / GlobalConstant.LogicAndUnityRatio;
+    linePoints_[1] = new Vector3(hitPos.X(), 0, hitPos.Y()) / GlobalConstant.LogicAndUnityRatio;
     rayRenderer_.positionCount = 2;
     CheckStartPointParticles();
     CheckEndPointParticles();
 
     var degree = shootingInfo.Dir.Degree() + (float)shootingInfo.Dir.Minute() / 60;
-    var eulerAngles = new Vector3(0, 0, degree);
+    var eulerAngles = new Vector3(0, degree, 0);
     startPointParticles_[0].transform.eulerAngles = eulerAngles;
     for (int i = 0; i < endPointParticles_.Length; i++)
     {

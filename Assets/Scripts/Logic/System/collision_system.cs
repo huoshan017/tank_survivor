@@ -81,7 +81,7 @@ namespace Logic.System
       CollisionResult result = CollisionResult.MoveNotAffected;
       while (entityCollisionDistanceHeap_.Get(out var kv))
       {
-        var entity2 = GetEntity(kv.entityInstId);
+        var entity2 = context_.GetEntity(kv.entityInstId);
         if (entity2 == null) continue;
         result = TwoEntityContactResult(entity, entityPos, kv.x, kv.y, kv.contactPoint, entity2);
         if (result == CollisionResult.Blocked)

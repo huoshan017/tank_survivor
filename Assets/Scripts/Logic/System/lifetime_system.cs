@@ -12,8 +12,8 @@ namespace Logic.System
 
         public override void DoUpdate(uint frameMs)
         {
-            entityList_.Foreach((uint key, uint _)=>{
-                var entity = GetEntity(key);
+            ForeachEntity((uint key)=>{
+                var entity = context_.GetEntity(key);
                 if (entity == null)
                 {
                     return;
@@ -35,7 +35,7 @@ namespace Logic.System
             var comp = entity.GetComponent<LifeTimeComponent>();
             if (comp != null)
             {
-                entityList_.Add(entity.InstId(), entity.InstId());
+                //entityList_.Add(entity.InstId(), entity.InstId());
                 comp.Begin();
                 DebugLog.Info("entity " + entity.InstId() + " life time begin");
                 return true;

@@ -147,7 +147,7 @@ entities_def:
     name: "heavy_tank_b"
     components:
       transform_comp: { orientation_rotation_diff: 90 }
-      movement_comp: { speed: 6820, rotation_speed: 350 }
+      movement_comp: { speed: 6820, rotation_speed: 850 }
       camp_comp: {}
       collider_comp: { shape: "rect", width: 2000, height: 2000, is_rigidbody: true }
       character_comp: { max_hp: 20000, max_level: 10 }

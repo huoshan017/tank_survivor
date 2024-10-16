@@ -91,9 +91,9 @@ public class InputManager : MonoBehaviour
         {
             var worldPos = Camera.main.ScreenToWorldPoint(mousePos);
             var posX_ = (long)(worldPos.x * GlobalConstant.LogicAndUnityRatio);
-            var posY_ = (long)(worldPos.y * GlobalConstant.LogicAndUnityRatio);
+            var posZ_ = (long)(worldPos.z * GlobalConstant.LogicAndUnityRatio); // 3d坐标系的z坐标对应逻辑坐标系的y坐标
             logicWorldCoord_[0] = posX_;
-            logicWorldCoord_[1] = posY_;
+            logicWorldCoord_[1] = posZ_;
             // 输入头部朝向的命令
             gameManager_.PushSyncPlayerCmd(GlobalConstant.DefaultSinglePlayerId, new CmdData
             {

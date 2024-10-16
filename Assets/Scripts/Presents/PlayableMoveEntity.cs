@@ -1,4 +1,3 @@
-using Common;
 using Common.Geometry;
 using Logic.Component;
 using Logic.Entity;
@@ -9,29 +8,26 @@ public class PlayableMoveEntity : PlayableEntity
   // Update is called once per frame
   protected new void Update()
   {
-    if (/*logicPosUpdated_ &&*/ (state_ == MoveState.Moving || state_ == MoveState.ToStop))
+    if (state_ == MoveState.Moving || state_ == MoveState.ToStop)
     {
       //transform.localPosition = new Vector3(currLogicPos_.X(), currLogicPos_.Y(), 0) / GlobalConstant.LogicAndUnityRatio;
-      //logicPosUpdated_ = false;
       transform.localPosition = Vector3.Lerp(
-        new Vector3(lastLogicPos_.X(), lastLogicPos_.Y(), 0)/GlobalConstant.LogicAndUnityRatio,
-        new Vector3(currLogicPos_.X(), currLogicPos_.Y(), 0)/GlobalConstant.LogicAndUnityRatio,
+        new Vector3(lastLogicPos_.X(), 0, lastLogicPos_.Y())/GlobalConstant.LogicAndUnityRatio,
+        new Vector3(currLogicPos_.X(), 0, currLogicPos_.Y())/GlobalConstant.LogicAndUnityRatio,
         moveLerpTotalDeltaTime_*1000/entity_.Context.FrameMs()
       );
       moveLerpTotalDeltaTime_ += Time.deltaTime;      
       if (state_ == MoveState.ToStop)
       {
         state_ = MoveState.Stopped;
-        DebugLog.Info("playable move entity " + entity_.InstId() + " stopped");
       }
-      DebugLog.Info("unity transform pos: x " + transform.localPosition.x + ", y " + transform.localPosition.y + "     curr logic pos: x" + currLogicPos_.X() + ", y " + currLogicPos_.Y());
     }
     base.Update();
     if (isRotating_)
     {
       rotateLerpTotalDeltaTime_ += Time.deltaTime;
       var a = transformComp_.RotateGetRotationResult(movementComp_.CompDef.RotationSpeed, (uint)(rotateLerpTotalDeltaTime_*1000), targetDir_, true);
-      transform.eulerAngles = new Vector3(0, 0, a.Degree() + a.Minute()/60);
+      transform.eulerAngles = new Vector3(rotateX_, a.Degree() + a.Minute()/60, rotateZ_);
     }   
   }
 

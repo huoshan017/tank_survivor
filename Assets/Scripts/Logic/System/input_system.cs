@@ -33,7 +33,7 @@ namespace Logic.System
         {
             if (cmdData.Cmd == CommandDefine.CmdMove)
             {
-                var entity = GetEntity(entityInstId);
+                var entity = context_.GetEntity(entityInstId);
                 if (entity == null) return;
                 if (entity.Parent == null)
                 {
@@ -47,7 +47,7 @@ namespace Logic.System
             }
             else if (cmdData.Cmd == CommandDefine.CmdStopMove)
             {
-                var entity = GetEntity(entityInstId);
+                var entity = context_.GetEntity(entityInstId);
                 if (entity == null) return;
                 if (entity.Parent == null)
                 {
@@ -106,7 +106,7 @@ namespace Logic.System
         public (IEntity, IEntity) GetEntityAndTowerChild(uint entityInstId)
         {
             IEntity entity = null;
-            entity = GetEntity(entityInstId);
+            entity = context_.GetEntity(entityInstId);
             if (entity == null) return (null, null);
             var child = entity.GetChildWithComponent((TagComponent comp) =>
             {

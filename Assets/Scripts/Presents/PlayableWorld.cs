@@ -204,15 +204,15 @@ public class PlayableWorld : MonoBehaviour, IPlayableContext
     for (int i = 0; i < line; i++)
     {
       linePositionPairs_[i] = new Vector3[2];
-      linePositionPairs_[i][0] = new Vector3(world_.MapLeft, world_.MapBottom + i * world_.GridHeight) / GlobalConstant.LogicAndUnityRatio;
-      linePositionPairs_[i][1] = new Vector3(world_.MapLeft + world_.MapWidth, world_.MapBottom + i * world_.GridHeight) / GlobalConstant.LogicAndUnityRatio;
+      linePositionPairs_[i][0] = new Vector3(world_.MapLeft, 0, world_.MapBottom + i * world_.GridHeight) / GlobalConstant.LogicAndUnityRatio;
+      linePositionPairs_[i][1] = new Vector3(world_.MapLeft + world_.MapWidth, 0, world_.MapBottom + i * world_.GridHeight) / GlobalConstant.LogicAndUnityRatio;
     }
     columnPositionPairs_ = new Vector3[column][];
     for (int i = 0; i < column; i++)
     {
       columnPositionPairs_[i] = new Vector3[2];
-      columnPositionPairs_[i][0] = new Vector3(world_.MapLeft + i * world_.GridWidth, world_.MapBottom) / GlobalConstant.LogicAndUnityRatio;
-      columnPositionPairs_[i][1] = new Vector3(world_.MapLeft + i * world_.GridWidth, world_.MapBottom + world_.MapHeight) / GlobalConstant.LogicAndUnityRatio;
+      columnPositionPairs_[i][0] = new Vector3(world_.MapLeft + i * world_.GridWidth, 0, world_.MapBottom) / GlobalConstant.LogicAndUnityRatio;
+      columnPositionPairs_[i][1] = new Vector3(world_.MapLeft + i * world_.GridWidth, 0, world_.MapBottom + world_.MapHeight) / GlobalConstant.LogicAndUnityRatio;
     }
   }
 

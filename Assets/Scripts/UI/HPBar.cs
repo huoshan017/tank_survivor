@@ -2,7 +2,7 @@
 
 public class HPBar : MonoBehaviour
 {
-  public static float ZHeight = -1000;
+  public static float YHeight = -1000;
   public Transform healthBar;
   public Transform backgroundBar;
   private Transform cameraToFace;

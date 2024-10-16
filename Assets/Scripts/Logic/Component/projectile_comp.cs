@@ -9,6 +9,7 @@ namespace Logic.Component
         public ProjectileType PType;
         public int Range;
         public int Damage;
+        public bool NoDestructionByCollision; // 碰撞后不销毁
         public override IComponent Create(IComponentContainer container)
         {
             return new ProjectileComponent(container);
