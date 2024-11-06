@@ -11,17 +11,35 @@ public class PlayableEntity : MonoBehaviour
     {
         if (transformComp_ != null)
         {
-            rotateX_ = transform.localEulerAngles.x;
-            rotateZ_ = transform.localEulerAngles.z;
-            transform.localEulerAngles = new Vector3(rotateX_, RotateDegree(), rotateZ_);
-            UpdatePos(true);
-            transform.localPosition = new Vector3(lastLogicPos_.X(), 0, lastLogicPos_.Y()) / GlobalConstant.LogicAndUnityRatio;
+            if (entity_.Parent == null)
+            {
+                rotateX_ = transform.localEulerAngles.x;
+                rotateZ_ = transform.localEulerAngles.z;
+                transform.localEulerAngles = new Vector3(rotateX_, RotateDegree(), rotateZ_);
+                UpdatePos(true);
+                transform.localPosition = new Vector3(lastLogicPos_.X(), 0, lastLogicPos_.Y()) / GlobalConstant.LogicAndUnityRatio;
+            }
+            else
+            {
+                rotateX_ = transform.localEulerAngles.x;
+                rotateZ_ = transform.localEulerAngles.y;
+                transform.localEulerAngles = new Vector3(rotateX_, rotateZ_, -RotateDegree());
+                UpdatePos(true);
+                transform.localPosition = new Vector3(lastLogicPos_.X(), lastLogicPos_.Y(), 0) / GlobalConstant.LogicAndUnityRatio;
+            }
         }
     }
 
     protected void Update()
     {
-        transform.localEulerAngles = new Vector3(rotateX_, RotateDegree(), rotateZ_);
+        if (entity_.Parent == null)
+        {
+            transform.localEulerAngles = new Vector3(rotateX_, RotateDegree(), rotateZ_);
+        }
+        else
+        {
+            transform.localEulerAngles = new Vector3(rotateX_, rotateZ_, -RotateDegree());
+        }
         UpdateHpBar(false);
         // TODO 画出包围盒，用于调试
         var colliderComp = entity_.GetComponent<ColliderComponent>();

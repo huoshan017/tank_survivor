@@ -69,3 +69,10 @@ entities_def:
     components:
       transform_comp: { orientation_rotation_diff: 90 }
       projectile_comp: { type: "shockwave", range: 30000, damage: 1000 }
+
+  - id: 9000 # 卫星
+    name: "satellite"
+    components:
+      transform_comp: { orientation_rotation_diff: 90 }
+      movementcomp: { move_type: 2, parent_type: 1, radius: 5000, angular_velocity: 200 } # 圆周运动
+      projectile_comp: { type: "bullet", damage: 1000, not_destroyed: true }
